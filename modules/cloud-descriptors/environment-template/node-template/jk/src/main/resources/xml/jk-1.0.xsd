@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0">
+
+  <xs:element name="jk-node-template" type="jkNodeTemplateType">
+    <xs:annotation>
+      <xs:documentation>
+
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="jkNodeTemplateType">
+    <xs:choice>
+      <xs:element name="configuration"
+                  type="configurationType"/>
+      <xs:element name="sla-enforcement"
+                  type="slaEnforcementType"/>
+    </xs:choice>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="configurationType">
+    <xs:all>
+      <xs:element name="jk-ref"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+  
+  <xs:complexType name="slaEnforcementType">
+    <xs:choice>
+      <xs:element name="health"
+                  type="healthType"/>
+      <xs:element name="elasticity"
+                  type="elasticityType"/>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="healthType"/>
+
+  <xs:complexType name="elasticityType">
+    <xs:attribute name="min" type="xs:integer" use="required"/>
+    <xs:attribute name="max" type="xs:integer" use="required"/>
+  </xs:complexType>
+</xs:schema>

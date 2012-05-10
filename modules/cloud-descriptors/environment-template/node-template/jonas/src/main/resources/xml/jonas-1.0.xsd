@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/node-template/paas/container/jonas/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/node-template/paas/container/jonas/1.0">
+
+  <xs:element name="jonas-node-template" type="jonasNodeTemplateType">
+    <xs:annotation>
+      <xs:documentation>
+
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="jonasNodeTemplateType">
+    <xs:choice>
+      <xs:element name="configuration"
+                  type="configurationType"/>
+      <xs:element name="sla-enforcement"
+                  type="slaEnforcementType"/>
+    </xs:choice>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="configurationType">
+    <xs:choice>
+      <xs:element name="java-ref"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="java-options"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="jonas-ref"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="slaEnforcementType">
+    <xs:choice>
+      <xs:element name="health"
+                  type="healthType"/>
+      <xs:element name="elasticity"
+                  type="elasticityType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="healthType">
+    <xs:all>
+      <xs:element name="jmx-indicator"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="elasticityType">
+    <xs:choice>
+      <xs:element name="session"
+                  type="sessionType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="aversion"
+                  type="aversionType"
+                  maxOccurs="1"/>
+      <xs:element name="scaling-rules"
+                  type="scalingRulesType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+    <xs:attribute name="min" type="xs:integer" use="required"/>
+    <xs:attribute name="max" type="xs:integer" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="sessionType">
+    <xs:attribute name="persistence" type="xs:boolean" use="required"/>
+    <xs:attribute name="replication" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="aversionType"/>
+
+  <xs:complexType name="scalingRulesType">
+    <xs:choice>
+      <xs:element name="throughput"
+                  type="throughputType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="responce-times"
+                  type="responceTimesType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="throughputType">
+    <xs:choice>
+      <xs:element name="jmx-indicator"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaleup-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaledown-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="responceTimesType">
+    <xs:choice>
+      <xs:element name="jmx-indicator"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaleup-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaledown-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>
+

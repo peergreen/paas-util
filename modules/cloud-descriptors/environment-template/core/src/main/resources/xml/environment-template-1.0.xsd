@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/environment/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/environment/1.0"
+           xmlns:jk="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0"
+           xmlns:jonas="http://jonas.ow2.org/ns/cloud/node-template/paas/container/jonas/1.0"
+           xmlns:connector="http://jonas.ow2.org/ns/cloud/topology/relationship-template/connector/1.0"
+           xmlns:external-db="http://jonas.ow2.org/ns/cloud/node-template/paas/database/external-db/1.0"
+           xmlns:datasource="http://jonas.ow2.org/ns/cloud/topology/relationship-template/datasource/1.0">
+
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0"
+             schemaLocation="../../../../../node-template/jk/src/main/resources/xml/jk-1.0.xsd"/>
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/node-template/paas/container/jonas/1.0"
+             schemaLocation="../../../../../node-template/jonas/src/main/resources/xml/jonas-1.0.xsd"/>
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/node-template/paas/database/external-db/1.0"
+             schemaLocation="../../../../../node-template/external-db/src/main/resources/xml/external-db-1.0.xsd"/>
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/topology/relationship-template/connector/1.0"
+             schemaLocation="../../../../../topology/connector/src/main/resources/xml/connector-1.0.xsd"/>
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/topology/relationship-template/datasource/1.0"
+             schemaLocation="../../../../../topology/datasource/src/main/resources/xml/datasource-1.0.xsd"/>
+
+  <xs:element name="environment-template" type="environmentTemplateType">
+    <xs:annotation>
+      <xs:documentation>
+
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="environmentTemplateType">
+    <xs:choice>
+      <xs:element name="name"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="description"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="multitenancy-level"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="topology-template"
+                  type="topologyTemplateType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="topologyTemplateType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="jk:jk-node-template"/>
+      <xs:element ref="jonas:jonas-node-template"/>
+      <xs:element ref="external-db:external-db-node-template"/>
+      <xs:element ref="connector:connector-relationship-template"/>
+      <xs:element ref="datasource:datasource-relationship-template"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>

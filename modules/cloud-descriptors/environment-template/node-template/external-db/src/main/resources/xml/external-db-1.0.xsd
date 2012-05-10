@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/node-template/paas/database/external-db/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/node-template/paas/database/external-db/1.0">
+
+  <xs:element name="external-db-node-template" type="externalDBNodeTemplateType">
+    <xs:annotation>
+      <xs:documentation>
+
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="externalDBNodeTemplateType">
+    <xs:choice>
+      <xs:element name="configuration"
+                  type="configurationType"/>
+    </xs:choice>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="configurationType">
+    <xs:choice>
+      <xs:element name="driver-location"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="url"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="classname"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="user"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="pwd"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/topology/relationship-template/datasource/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/topology/relationship-template/datasource/1.0">
+
+  <xs:element name="datasource-relationship-template" type="relationshipTemplateType">
+    <xs:annotation>
+      <xs:documentation>
+
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="relationshipTemplateType">
+    <xs:choice>
+      <xs:element name="container"
+                  type="containerType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="database"
+                  type="databaseType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="configuration"
+                  type="configurationType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="containerType">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="databaseType">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="configurationType">
+    <xs:all>
+      <xs:element name="jndi"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+</xs:schema>
