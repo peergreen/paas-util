@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/application/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/application/1.0"
+           xmlns:artefact="http://jonas.ow2.org/ns/cloud/deployable/artefact/1.0"
+           xmlns:embedded-xml="http://jonas.ow2.org/ns/cloud/deployable/xml/1.0">
+
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/deployable/artefact/1.0"
+             schemaLocation="../../../../../deployable/artefact/src/main/resources/xml/artefact-1.0.xsd"/>
+  <xs:import namespace="http://jonas.ow2.org/ns/cloud/deployable/xml/1.0"
+             schemaLocation="../../../../../deployable/xml/src/main/resources/xml/xml-1.0.xsd"/>
+
+  <xs:annotation>
+    <xs:documentation>
+      <![CDATA[
+      JOnAS: Java(TM) Open Application Server
+      Copyright (C) 2012 Bull S.A.S
+      Contact: jonas-team@ow2.org
+
+      This library is free software; you can redistribute it and/or
+      modify it under the terms of the GNU Lesser General Public
+      License as published by the Free Software Foundation; either
+      version 2.1 of the License, or any later version.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+      Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+      USA
+      ]]>
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- Root element -->
+  <xs:element name="cloud-application" type="cloudApplicationType">
+    <xs:annotation>
+      <xs:documentation>
+        The &lt;cloud-application> element is the root element of the XML file.
+
+        Example:
+        &lt;cloud-application
+        xmlns="http://jpaas.jonas.ow2.org/cloud-application-v6"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jpaas.jonas.ow2.org/cloud-application-v6 http://jpaas.jonas.ow2.org/cloud-application-v6.xsd"
+        name="demo" version="6">
+        ...
+        &lt;/cloud-application>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="cloudApplicationType">
+    <xs:annotation>
+      <xs:documentation>
+        The &lt;cloud-application type describe an application.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="name"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="description"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="version"
+                  type="xs:string"
+                  minOccurs="0"
+                  maxOccurs="1"/>
+      <xs:element name="instance"
+                  type="xs:string"
+                  minOccurs="0"
+                  maxOccurs="1"/>
+      <xs:element name="requirements"
+                  type="requirementsType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="capabilities"
+                  type="capabilitiesType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="deployables"
+                  type="deployablesType"
+                  minOccurs="0"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="requirementsType">
+    <xs:annotation>
+      <xs:documentation>
+        The &lt;requirements type describe global requirements of the application - expressed in a LDAP query syntax.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="requirement"
+                  type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="capabilitiesType">
+    <xs:annotation>
+      <xs:documentation>
+        The &lt;requirements type describe capabilities offered by the application..
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="application"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="service"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="deployablesType">
+    <xs:annotation>
+      <xs:documentation>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="embedded-xml:xml-deployable" minOccurs="0"/>
+      <xs:element ref="artefact:artefact-deployable" minOccurs="0"/>
+    </xs:choice>
+  </xs:complexType>
+
+</xs:schema>
