@@ -21,30 +21,33 @@
   - USA
   -
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  - $Id: 
+  - $Id:
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>org.ow2</groupId>
-    <artifactId>ow2</artifactId>
-    <version>1.3</version>
+    <artifactId>jpaas-util-modules</artifactId>
+    <groupId>org.ow2.jonas.jpaas</groupId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.ow2.jonas.jpaas</groupId>
-  <artifactId>jpaas-util</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>jpaas-util-cloud-descriptors</artifactId>
   <packaging>pom</packaging>
-  <name>JPaaS Util</name>
-
+  <name>JPaaS Util :: Modules :: Cloud descriptors</name>
   <modules>
-    <module>modules</module>
+    <module>cloud-application</module>
+    <module>deployment</module>
+    <module>environment-template</module>
   </modules>
-  
-   
+
+  <properties>
+    <jaxb.version>2.2.5</jaxb.version>
+    <jaxb-api.version>${jaxb.version}</jaxb-api.version>
+    <jaxb-impl.version>${jaxb.version}</jaxb-impl.version>
+  </properties>
+
 </project>
