@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/deployment/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/deployment/1.0">
+
+  <xs:element name="deployment" type="deploymentType">
+    <xs:annotation>
+      <xs:documentation>
+
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="deploymentType">
+    <xs:choice>
+      <xs:element name="application"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="environment"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="deployment-map"
+                  type="deploymentMapType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="deploymentMapType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="entry"
+                  type="entryType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="entryType">
+    <xs:attribute name="deployable" type="xs:string" use="required"/>
+    <xs:attribute name="node" type="xs:string" use="required"/>
+  </xs:complexType>
+</xs:schema>
