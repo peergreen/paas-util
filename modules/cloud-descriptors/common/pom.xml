@@ -29,26 +29,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>jpaas-util-modules</artifactId>
+    <artifactId>jpaas-util-cloud-descriptors</artifactId>
     <groupId>org.ow2.jonas.jpaas</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+  <name>JPaaS Util :: Modules :: Cloud descriptors :: Common</name>
+  <artifactId>jpaas-util-cloud-descriptors-common</artifactId>
 
-  <artifactId>jpaas-util-cloud-descriptors</artifactId>
-  <packaging>pom</packaging>
-  <name>JPaaS Util :: Modules :: Cloud descriptors</name>
-  <modules>
-    <module>common</module>
-    <module>cloud-application</module>
-    <module>deployment</module>
-    <module>environment-template</module>
-  </modules>
-
-  <properties>
-    <jaxb.version>2.2.5</jaxb.version>
-    <jaxb-api.version>${jaxb.version}</jaxb-api.version>
-    <jaxb-impl.version>${jaxb.version}</jaxb-impl.version>
-  </properties>
 
 </project>
