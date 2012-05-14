@@ -120,6 +120,12 @@ public class AbstractXmlLoader {
         return value;
     }
 
+    /**
+     * Read url content
+     * @param url
+     * @return content
+     * @throws IOException
+     */
     private static String readURL(final URL url) throws IOException {
         URLConnection connection = url.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -141,6 +147,7 @@ public class AbstractXmlLoader {
     }
 
     /**
+     * Get sources list corresponding to URLs
      * @param urls List of URL
      * @return the list of {@link javax.xml.transform.Source} associated to the list of url
      */
@@ -156,7 +163,7 @@ public class AbstractXmlLoader {
     }
 
     /**
-     *
+     * Get the source corresponding to URL
      * @param url The {@link java.net.URL}
      * @return the {@link javax.xml.transform.Source} associated to the given URL
      * @throws Exception
@@ -180,5 +187,4 @@ public class AbstractXmlLoader {
             return null;
         }
     }
-
 }

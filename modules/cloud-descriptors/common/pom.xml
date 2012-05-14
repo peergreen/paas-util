@@ -37,5 +37,11 @@
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Common</name>
   <artifactId>jpaas-util-cloud-descriptors-common</artifactId>
 
-
+  <dependencies>
+    <dependency>
+      <groupId>org.ow2.bundles</groupId>
+      <artifactId>ow2-util-log</artifactId>
+      <version>${ow2-bundles.version}</version>
+    </dependency>
+  </dependencies>
 </project>

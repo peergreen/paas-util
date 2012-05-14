@@ -25,16 +25,28 @@
 
 package org.ow2.jonas.jpaas.clouddescriptors.common;
 
+import org.ow2.util.log.Log;
+import org.ow2.util.log.LogFactory;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -45,6 +57,12 @@ import java.util.regex.Pattern;
  * @author Mohammed Boukada
  */
 public class AbstractDesc {
+
+    /**
+     * The logger
+     */
+    protected static Log logger = LogFactory.getLog(AbstractDesc.class);
+
     /**
      * XSD URL
      */
@@ -72,12 +90,12 @@ public class AbstractDesc {
         try {
             input = new FileInputStream(filename.getFile());
         } catch (FileNotFoundException e) {
-            throw new Exception("Cannot read cloud-application properties file", e);
+            throw new Exception("Cannot read " + location + " properties file", e);
         }
         try {
             properties.load(input);
         } catch (Exception e) {
-            throw new Exception("Cannot load cloud-application properties file", e);
+            throw new Exception("Cannot load " + location + " properties file", e);
         } finally {
             input.close();
         }
@@ -114,7 +132,7 @@ public class AbstractDesc {
      * @return the list of Source associate to the given resources list
      */
     protected List<URL> getXsdURL(final Map<String, Class<?>> resources) throws Exception {
-        List<URL> urls = new ArrayList<URL>();
+        List<URL> urls = new LinkedList<URL>();
         for (Map.Entry<String, Class<?>> resource : resources.entrySet()) {
             URL url = getXsdURL(resource);
             if (url != null) {
@@ -150,5 +168,68 @@ public class AbstractDesc {
             }
         }
         return url;
+    }
+
+    /**
+     * @param url The xml URL
+     * @return the associated file
+     */
+    protected File getFile(final URL url) {
+        try {
+            return new File(url.toURI());
+        } catch (URISyntaxException e) {
+            logger.error("Cannot get the URI of the URL " + url.getFile(), e);
+        }
+        return null;
+    }
+
+    /**
+     * @param file The  file
+     * @return the associated document
+     */
+    protected Document getDocument(final File file) {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = null;
+        Document document = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            logger.error("Cannot get the instance of the DocumentBuilder", e);
+        }
+        if (documentBuilder != null) {
+            try {
+                document = documentBuilder.parse(file);
+            } catch (SAXException e) {
+                logger.error("Cannot parse XML file " + file.getAbsolutePath(), e);
+            } catch (IOException e) {
+                logger.error("Cannot parse XML file " + file.getAbsolutePath(), e);
+            }
+        }
+        return document;
+    }
+
+    /**
+     * @param content
+     * @return the associated document
+     */
+    protected Document getDocument(final String content) {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = null;
+        Document document = null;
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            logger.error("Cannot get the instance of the DocumentBuilder", e);
+        }
+        if (documentBuilder != null) {
+            try {
+                document = documentBuilder.parse(new InputSource(new StringReader(content.trim())));
+            } catch (SAXException e) {
+                logger.error("Cannot parse XML content of " + content, e);
+            } catch (IOException e) {
+                logger.error("Cannot parse XML content of " + content, e);
+            }
+        }
+        return document;
     }
 }
