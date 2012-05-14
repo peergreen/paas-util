@@ -35,7 +35,7 @@ import java.util.List;
  * Load the Xml cloud-application
  * @author Mohammed Boukada
  */
-public class XmlLoader extends AbstractXmlLoader {
+public class CloudApplicationXmlLoader extends AbstractXmlLoader {
 
     Object cloudApplication;
 
@@ -47,8 +47,8 @@ public class XmlLoader extends AbstractXmlLoader {
      * @param xsdURLs URLs of XSD schemas
      * @throws Exception
      */
-    public XmlLoader(final URL cloudApplicationURL, final CloudApplicationVersion cloudApplicationVersion,
-                     final List<URL> xsdURLs)
+    public CloudApplicationXmlLoader(final URL cloudApplicationURL, final CloudApplicationVersion cloudApplicationVersion,
+                                     final List<URL> xsdURLs)
                      throws Exception {
         this.cloudApplication = loadSchemaAndFile(xsdURLs,
                 CloudApplicationPropertiesManager.getCloudApplicationXMLNS(cloudApplicationVersion),
@@ -64,8 +64,8 @@ public class XmlLoader extends AbstractXmlLoader {
      * @param xsdURLs URLs of XSD schemas
      * @throws Exception
      */
-    public XmlLoader(final String xml, final CloudApplicationVersion cloudApplicationVersion,
-                     final List<URL> xsdURLs)
+    public CloudApplicationXmlLoader(final String xml, final CloudApplicationVersion cloudApplicationVersion,
+                                     final List<URL> xsdURLs)
             throws Exception {
         this.cloudApplication = loadSchemaAndFile(xsdURLs,
                 CloudApplicationPropertiesManager.getCloudApplicationXMLNS(cloudApplicationVersion),
@@ -75,7 +75,7 @@ public class XmlLoader extends AbstractXmlLoader {
 
     /**
      * @param cloudApplicationVersion {@link CloudApplicationVersion}
-     * @return the correct root class according to the deployme version
+     * @return the correct root class according to the cloud-application version
      */
     private Class getRootClass(final CloudApplicationVersion cloudApplicationVersion) {
         if (CloudApplicationVersion.CLOUD_APPLICATION_1.equals(cloudApplicationVersion)) {

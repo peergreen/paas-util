@@ -16,7 +16,7 @@
       <![CDATA[
       JOnAS: Java(TM) Open Application Server
       Copyright (C) 2012 Bull S.A.S
-      Contact: jonas-team@ow2.org
+      Contact: jasmine@ow2.org
 
       This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public
@@ -40,16 +40,16 @@
   <xs:element name="cloud-application" type="cloudApplicationType">
     <xs:annotation>
       <xs:documentation>
-        The &lt;cloud-application> element is the root element of the XML file.
+        <![CDATA[
+        The <cloud-application> element is the root element of the XML file.
 
         Example:
-        &lt;cloud-application
-        xmlns="http://jpaas.jonas.ow2.org/cloud-application-v6"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://jpaas.jonas.ow2.org/cloud-application-v6 http://jpaas.jonas.ow2.org/cloud-application-v6.xsd"
-        name="demo" version="6">
+        <cloud-application xmlns="http://jonas.ow2.org/ns/cloud/application/1.0"
+                   xmlns:artefact="http://jonas.ow2.org/ns/cloud/deployable/artefact/1.0"
+                   xmlns:embedded-xml="http://jonas.ow2.org/ns/cloud/deployable/xml/1.0">
         ...
-        &lt;/cloud-application>
+        </cloud-application>
+        ]]>
       </xs:documentation>
     </xs:annotation>
   </xs:element>
@@ -57,7 +57,13 @@
   <xs:complexType name="cloudApplicationType">
     <xs:annotation>
       <xs:documentation>
-        The &lt;cloud-application type describe an application.
+        <![CDATA[The cloud-application type describe an application.
+          name & description : Application description
+          version : Version Label
+          instance : Instance name
+          requirements : Global requirements of the application
+          capabilities :Capabilities offered by the application
+          deployables : List of deployables]]>
       </xs:documentation>
     </xs:annotation>
     <xs:all>
@@ -95,7 +101,12 @@
   <xs:complexType name="requirementsType">
     <xs:annotation>
       <xs:documentation>
-        The &lt;requirements type describe global requirements of the application - expressed in a LDAP query syntax.
+        <![CDATA[The requirements type describe global requirements of the application - expressed in a LDAP query syntax.
+                 For example, requirement can describe the expected multitenancy level
+                  - SharedHardware : shared hardware / isolated VM
+                  - SharedVm : shared VM / isolated JVM
+                  - SharedJvm : shared JVM / isolated application
+                  - SharedApp : shared application ]]>
       </xs:documentation>
     </xs:annotation>
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -107,7 +118,9 @@
   <xs:complexType name="capabilitiesType">
     <xs:annotation>
       <xs:documentation>
-        The &lt;requirements type describe capabilities offered by the application..
+        <![CDATA[The capabilities describe capabilities offered by the application.
+                 May be used to provide information about the service published by the application itself
+                 Format is maven like '<propertyname>value</propertyname>'  ]]>
       </xs:documentation>
     </xs:annotation>
     <xs:all>
@@ -125,6 +138,20 @@
   <xs:complexType name="deployablesType">
     <xs:annotation>
       <xs:documentation>
+        <![CDATA[The deployables type describe a list of deployables
+                 The deployable sequence is sorted and describes to the loading order (at least for those that are collocated)
+
+                  Type of deployable
+                           - JOnAS deployable (artefact or xml)
+                           - Apache deployable (static pages extracted from an artefact url)
+                           - DB deployable (artefact url including some sql scripts ?)
+                           - JVM deployable (jvm options and properties)
+                           - VM deployable (env variables definition)
+
+                  Requirements can be set for each deployable, each one in a query ldap format.
+
+                  SLA enforcement (health & elasticity configuration) can be set for each deployable.
+                  To note that SLA enforcement can be set both at platform layer (environment) and application layer (here).]]>
       </xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">

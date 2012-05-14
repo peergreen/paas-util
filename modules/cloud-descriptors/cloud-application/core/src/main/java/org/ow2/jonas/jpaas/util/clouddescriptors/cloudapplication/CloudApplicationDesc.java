@@ -32,20 +32,11 @@ import org.ow2.util.log.Log;
 import org.ow2.util.log.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -117,7 +108,7 @@ public class CloudApplicationDesc extends AbstractDesc {
      * @throws Exception
      */
     private void init() throws Exception {
-        this.xsdUrls = new ArrayList<URL>();
+        this.xsdUrls = new LinkedList<URL>();
         this.namespaces = new LinkedHashMap<String, Node> ();
         CloudApplicationPropertiesManager.setProperties(loadProperties(CLOUD_APPLICATION_PROPERTIES_NAME));
     }
@@ -128,13 +119,19 @@ public class CloudApplicationDesc extends AbstractDesc {
      */
     private void setXsdUrls() throws Exception {
         initArtefactAndXmlVersions();
+
+        // Get xsd paths
         String xsdCloudApplication = CloudApplicationPropertiesManager.getXsdCloudApplicationPath(cloudApplicationVersion);
         String xsdArtefact = CloudApplicationPropertiesManager.getXsdArtefactPath(artefactVersion);
         String xsdXml = CloudApplicationPropertiesManager.getXsdXmlPath(xmlVersion);
-        Map<String, Class<?>> resources = new HashMap<String, Class<?>>();
-        resources.put(xsdCloudApplication, CloudApplicationVersion.class);
-        resources.put(xsdArtefact, ArtefactVersion.class);
+
+        // Store paths with there corresponding class (classloader)
+        Map<String, Class<?>> resources = new LinkedHashMap<String, Class<?>>();
+        // Start by adding imported xsd
         resources.put(xsdXml, XmlVersion.class);
+        resources.put(xsdArtefact, ArtefactVersion.class);
+        resources.put(xsdCloudApplication, CloudApplicationVersion.class);  // Must be the last added to the map
+
         xsdUrls = getXsdURL(resources);
     }
 
@@ -142,7 +139,7 @@ public class CloudApplicationDesc extends AbstractDesc {
      * Initialize artefact and xml version
      */
     private void initArtefactAndXmlVersions() {
-        List<String> namespaces = new ArrayList<String>();
+        List<String> namespaces = new LinkedList<String>();
         for (Map.Entry<String, Node> entry : this.namespaces.entrySet()) {
             namespaces.add(entry.getKey());
         }
@@ -175,8 +172,8 @@ public class CloudApplicationDesc extends AbstractDesc {
     public void loadCloudApplication(final URL urlCloudApplication) throws Exception {
         initCloudApplicationVersion(urlCloudApplication);
         setXsdUrls();
-        XmlLoader xmlLoader = new XmlLoader(urlCloudApplication, this.cloudApplicationVersion, this.xsdUrls);
-        this.cloudApplication = xmlLoader.getCloudApplication();
+        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader(urlCloudApplication, this.cloudApplicationVersion, this.xsdUrls);
+        this.cloudApplication = cloudApplicationXmlLoader.getCloudApplication();
     }
 
     /**
@@ -189,8 +186,8 @@ public class CloudApplicationDesc extends AbstractDesc {
     public void loadCloudApplication(final String cloudApplication) throws Exception {
         initCloudApplicationVersion(cloudApplication);
         setXsdUrls();
-        XmlLoader xmlLoader = new XmlLoader(cloudApplication, this.cloudApplicationVersion, this.xsdUrls);
-        this.cloudApplication = xmlLoader.getCloudApplication();
+        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader(cloudApplication, this.cloudApplicationVersion, this.xsdUrls);
+        this.cloudApplication = cloudApplicationXmlLoader.getCloudApplication();
     }
 
     /**
@@ -198,11 +195,7 @@ public class CloudApplicationDesc extends AbstractDesc {
      * @param urlCloudApplication The cloud-application URL
      */
     private void initCloudApplicationVersion(final URL urlCloudApplication) {
-        try {
-            initCloudApplicationVersion(new File(urlCloudApplication.toURI()));
-        } catch (URISyntaxException e) {
-            logger.error("Cannot get the URI of the URL " + urlCloudApplication.getFile(), e);
-        }
+        initCloudApplicationVersion(getFile(urlCloudApplication));
     }
 
     /**
@@ -210,24 +203,7 @@ public class CloudApplicationDesc extends AbstractDesc {
      * @param cloudApplicationFile The cloud-application file
      */
     private void initCloudApplicationVersion(final File cloudApplicationFile) {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = null;
-        Document document = null;
-        try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            logger.error("Cannot get the instance of the DocumentBuilder", e);
-        }
-        if (documentBuilder != null) {
-            try {
-                document = documentBuilder.parse(cloudApplicationFile);
-            } catch (SAXException e) {
-                logger.error("Cannot parse XML file " + cloudApplicationFile.getAbsolutePath(), e);
-            } catch (IOException e) {
-                logger.error("Cannot parse XML file " + cloudApplicationFile.getAbsolutePath(), e);
-            }
-        }
-        initCloudApplicationVersion(document);
+        initCloudApplicationVersion(getDocument(cloudApplicationFile));
     }
 
     /**
@@ -235,24 +211,7 @@ public class CloudApplicationDesc extends AbstractDesc {
      * @param cloudApplication The content of the cloud-application
      */
     private void initCloudApplicationVersion(final String cloudApplication) {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = null;
-        Document document = null;
-        try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            logger.error("Cannot get the instance of the DocumentBuilder", e);
-        }
-        if (documentBuilder != null) {
-            try {
-                document = documentBuilder.parse(new InputSource(new StringReader(cloudApplication.trim())));
-            } catch (SAXException e) {
-                logger.error("Cannot parse XML content of " + cloudApplication, e);
-            } catch (IOException e) {
-                logger.error("Cannot parse XML content of " + cloudApplication, e);
-            }
-        }
-        initCloudApplicationVersion(document);
+        initCloudApplicationVersion(getDocument(cloudApplication));
     }
 
     /**
@@ -263,6 +222,6 @@ public class CloudApplicationDesc extends AbstractDesc {
         if (document != null) {
             getNamespace(document);
         }
-        this.cloudApplicationVersion = CloudApplicationPropertiesManager.getCloudApplicationVersion(new ArrayList<String>(this.namespaces.keySet()));
+        this.cloudApplicationVersion = CloudApplicationPropertiesManager.getCloudApplicationVersion(new LinkedList<String>(this.namespaces.keySet()));
     }
 }

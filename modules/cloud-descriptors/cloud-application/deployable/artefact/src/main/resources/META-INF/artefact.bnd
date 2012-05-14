@@ -22,11 +22,9 @@
 #   - $Id$
 #   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Import-Package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated,\
-               org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.xml.v1.generated,\
-               *
+Import-Package *
 
-Export-Package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication,\
-               org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated
+Export-Package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.deployable.artefact,\
+               org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated
 
 DynamicImport-Package *
