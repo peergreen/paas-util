@@ -37,6 +37,25 @@
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Deployment :: Core</name>
   <artifactId>jpaas-util-cloud-descriptors-deployment-core</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.ow2.bundles</groupId>
+      <artifactId>ow2-util-log</artifactId>
+      <version>${ow2-bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ow2.jonas.jpaas</groupId>
+      <artifactId>jpaas-util-cloud-descriptors-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>

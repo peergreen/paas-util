@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<deployment xmlns="http://jonas.ow2.org/ns/cloud/deployment/1.0">   
+             
+   <!-- application instance -->
+   <application>myapp4prod</application>
+
+   <!-- environment -->
+   <environment>MyEnv</environment>
+
+   <!-- deployable id /node id mapping -->
+   <deployment-map>
+      <entry deployable="a1" node="n1"/>
+      <entry deployable="a2" node="n1"/>
+      <entry deployable="a3" node="n2"/>
+      <entry deployable="a4" node="n2"/>
+   </deployment-map>
+  
+</deployment>
