@@ -36,6 +36,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Environment template :: Topology :: Connector</name>
   <artifactId>jpaas-util-cloud-descriptors-environment-template-topology-connector</artifactId>
+  <packaging>bundle</packaging>
 
   <build>
     <plugins>

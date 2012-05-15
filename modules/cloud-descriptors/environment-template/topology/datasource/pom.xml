@@ -36,6 +36,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Environment template :: Topology :: Datasource</name>
   <artifactId>jpaas-util-cloud-descriptors-environment-template-topology-datasource</artifactId>
+  <packaging>bundle</packaging>
 
   <build>
     <plugins>

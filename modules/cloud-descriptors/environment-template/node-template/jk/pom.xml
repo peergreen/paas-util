@@ -36,6 +36,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Environment template :: Node Template :: Apache / JK</name>
   <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-jk</artifactId>
+  <packaging>bundle</packaging>
 
   <build>
     <plugins>

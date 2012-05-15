@@ -4,27 +4,72 @@
            targetNamespace="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0"
            xmlns="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0">
 
+  <xs:annotation>
+    <xs:documentation>
+      <![CDATA[
+      JOnAS: Java(TM) Open Application Server
+      Copyright (C) 2012 Bull S.A.S
+      Contact: jasmine@ow2.org
+
+      This library is free software; you can redistribute it and/or
+      modify it under the terms of the GNU Lesser General Public
+      License as published by the Free Software Foundation; either
+      version 2.1 of the License, or any later version.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+      Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
+      USA
+      ]]>
+    </xs:documentation>
+  </xs:annotation>
+
   <xs:element name="jk-node-template" type="jkNodeTemplateType">
     <xs:annotation>
       <xs:documentation>
-
+        <![CDATA[
+          Apache : JK node template
+        ]]>
       </xs:documentation>
     </xs:annotation>
   </xs:element>
 
   <xs:complexType name="jkNodeTemplateType">
-    <xs:choice>
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[
+           The JK node template type describe a router : Apache / Jk
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
       <xs:element name="configuration"
-                  type="configurationType"/>
+                  type="configurationType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
       <xs:element name="sla-enforcement"
-                  type="slaEnforcementType"/>
-    </xs:choice>
+                  type="slaEnforcementType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
     <xs:attribute name="type" type="xs:string" use="required"/>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="id" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="configurationType">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[
+          The configuration type describe the configuration of a router Apache / Jk
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
     <xs:all>
       <xs:element name="jk-ref"
                   type="xs:string"
@@ -34,18 +79,42 @@
   </xs:complexType>
   
   <xs:complexType name="slaEnforcementType">
-    <xs:choice>
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+          The sla-enforcement type describe sla-enforcement of a router Apache / Jk
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
       <xs:element name="health"
-                  type="healthType"/>
+                  type="healthType"
+                  minOccurs="0"/>
       <xs:element name="elasticity"
-                  type="elasticityType"/>
-    </xs:choice>
+                  type="elasticityType"
+                  minOccurs="0"/>
+    </xs:all>
   </xs:complexType>
   
-  <xs:complexType name="healthType"/>
+  <xs:complexType name="healthType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+          The health type describe the health of a router Apache / Jk
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
 
   <xs:complexType name="elasticityType">
-    <xs:attribute name="min" type="xs:integer" use="required"/>
-    <xs:attribute name="max" type="xs:integer" use="required"/>
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+         The elasticity type describe the elasticity of a router Apache / Jk
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="min" type="xs:int" use="required"/>
+    <xs:attribute name="max" type="xs:int" use="required"/>
   </xs:complexType>
 </xs:schema>
