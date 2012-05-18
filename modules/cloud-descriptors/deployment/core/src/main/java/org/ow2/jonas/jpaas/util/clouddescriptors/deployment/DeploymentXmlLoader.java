@@ -28,6 +28,7 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.deployment;
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractXmlLoader;
 import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.DeploymentType;
 
+import javax.xml.bind.JAXBElement;
 import java.net.URL;
 import java.util.List;
 
@@ -38,6 +39,11 @@ import java.util.List;
 public class DeploymentXmlLoader extends AbstractXmlLoader {
 
     Object deployment;
+
+    /**
+     * Default constructor
+     */
+    public DeploymentXmlLoader() {}
 
     /**
      * Constructor. Loads the deployment
@@ -82,6 +88,18 @@ public class DeploymentXmlLoader extends AbstractXmlLoader {
             return DeploymentType.class;
         }
         return null;
+    }
+
+    /**
+     * Generate xml content
+     * @param deployment root element
+     * @param deploymentVersion deployment version
+     * @return xml content
+     * @throws javax.xml.bind.JAXBException
+     */
+    public String toXml(JAXBElement<DeploymentType> deployment, DeploymentVersion deploymentVersion,
+                        final List<URL> xsdURLs) throws Exception {
+        return toXml(deployment, xsdURLs, getRootClass(deploymentVersion), null);
     }
 
     /**

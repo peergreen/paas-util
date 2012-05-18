@@ -26,11 +26,13 @@
 package org.ow2.jonas.jpaas.util.clouddescriptors.deployment;
 
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractDesc;
+import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.DeploymentType;
 import org.ow2.util.log.Log;
 import org.ow2.util.log.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.xml.bind.JAXBElement;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,6 +64,11 @@ public class DeploymentDesc extends AbstractDesc {
      * Properties file path (in properties path format)
      */
     private static final String DEPLOYMENT_PROPERTIES_NAME = "properties/deployment.properties";
+
+    /**
+     * Default deployment version
+     */
+    private static final DeploymentVersion DEFAULT_DEPLOYMENT_VERSION = DeploymentVersion.DEPLOYMENT_1;
 
     /**
      * Default constructor
@@ -99,11 +106,21 @@ public class DeploymentDesc extends AbstractDesc {
         this.namespaces = new LinkedHashMap<String, Node>();
         DeploymentPropertiesManager.setProperties(loadProperties(DEPLOYMENT_PROPERTIES_NAME));
     }
+
     /**
      * Set XSD URLs
      * @throws Exception
      */
     private void setXsdUrls() throws Exception {
+        setXsdUrls(deploymentVersion);
+    }
+
+    /**
+     * Set XSD URLs
+     * @param deploymentVersion
+     * @throws Exception
+     */
+    private void setXsdUrls(DeploymentVersion deploymentVersion) throws Exception {
         String xsdDeployment = DeploymentPropertiesManager.getXsdDeploymentPath(deploymentVersion);
         Map<String, Class<?>> resources = new HashMap<String, Class<?>>();
         resources.put(xsdDeployment, DeploymentVersion.class);
@@ -136,6 +153,18 @@ public class DeploymentDesc extends AbstractDesc {
         setXsdUrls();
         DeploymentXmlLoader deploymentXmlLoader = new DeploymentXmlLoader(deployment, this.deploymentVersion, this.xsdUrls);
         this.deployment = deploymentXmlLoader.getDeployment();
+    }
+
+    /**
+     * Generate deployment xml
+     * @param deployment
+     * @return xml content
+     * @throws Exception
+     */
+    public String generateDeployment(JAXBElement<DeploymentType> deployment) throws Exception {
+        DeploymentXmlLoader deploymentXmlLoader = new DeploymentXmlLoader();
+        setXsdUrls(DEFAULT_DEPLOYMENT_VERSION);
+        return deploymentXmlLoader.toXml(deployment, DEFAULT_DEPLOYMENT_VERSION, this.xsdUrls);
     }
 
     /**

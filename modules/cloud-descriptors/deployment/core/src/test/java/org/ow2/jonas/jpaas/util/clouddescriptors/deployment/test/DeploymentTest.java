@@ -28,9 +28,10 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.deployment.test;
 import org.junit.Assert;
 import org.junit.Test;
 import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.DeploymentDesc;
-import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.DeploymentType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.DeploymentMapType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.DeploymentType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.EntryType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.deployment.v1.generated.ObjectFactory;
 
 import java.net.URL;
 import java.util.List;
@@ -71,5 +72,34 @@ public class DeploymentTest {
         EntryType entry4 = listEntries.get(3);
         Assert.assertEquals("Wrong deployable for the fourth entry", entry4.getDeployable(), "a4");
         Assert.assertEquals("Wrong node for the fourth entry", entry4.getNode(), "n2");
+    }
+    
+    @Test
+    public void testGenerateDeployment() throws Exception {
+        DeploymentDesc desc = new DeploymentDesc();
+        DeploymentType deploymentType = new DeploymentType();
+        deploymentType.setApplication("My app");
+        deploymentType.setEnvironment("My env");
+        DeploymentMapType deploymentMap = new DeploymentMapType();
+        List<EntryType> listEntries = deploymentMap.getEntry();
+        EntryType entry1 = new EntryType();
+        entry1.setDeployable("dep1");
+        entry1.setNode("node1");
+        listEntries.add(entry1);
+        EntryType entry2 = new EntryType();
+        entry2.setDeployable("dep2");
+        entry2.setNode("node2");
+        listEntries.add(entry2);
+        deploymentType.setDeploymentMap(deploymentMap);
+        
+        // Generate xml 
+        ObjectFactory objectFactory = new ObjectFactory();
+        String xml = desc.generateDeployment(objectFactory.createDeployment(deploymentType));
+
+        DeploymentDesc desc1 = new DeploymentDesc(xml);
+        DeploymentType deployment = (DeploymentType) desc1.getDeployment();
+        Assert.assertEquals("Wrong application name", deployment.getApplication(), "My app");
+        Assert.assertEquals("Wrong environment name", deployment.getEnvironment(), "My env");
+
     }
 }
