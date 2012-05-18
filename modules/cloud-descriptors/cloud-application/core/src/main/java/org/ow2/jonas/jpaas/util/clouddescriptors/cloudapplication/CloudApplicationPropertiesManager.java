@@ -189,7 +189,7 @@ public class CloudApplicationPropertiesManager {
      * @param xmlVersion {@link XmlVersion}
      * @return the xml schema location
      */
-    public static String getCloudApplicationSchemaLocation(final XmlVersion xmlVersion) {
+    public static String getXmlSchemaLocation(final XmlVersion xmlVersion) {
         if (XmlVersion.XML_1.equals(xmlVersion)) {
             return properties.getProperty(CloudApplicationPropertiesManager.XML_1_KEY_SCHEMA_LOCATION);
         }

@@ -28,14 +28,16 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.test;
 import org.junit.Assert;
 import org.junit.Test;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.CloudApplicationDesc;
-import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CloudApplicationType;
-import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CapabilitiesType;
-import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.DeployablesType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.ArtefactDeployableType;
-import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.SlaEnforcementType;
-import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.HealthType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.ElasticityType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.HealthType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.SlaEnforcementType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CapabilitiesType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CloudApplicationType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.DeployablesType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.ObjectFactory;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.xml.v1.generated.XmlDeployableType;
+
 import java.net.URL;
 import java.util.List;
 
@@ -185,5 +187,40 @@ public class CloudApplicationTest {
         Assert.assertNotNull("Sla enforcement must be not null", slaEnforcement1);
         Assert.assertNull("Health must be null in this example", slaEnforcement1.getHealth());
         Assert.assertNull("Elasticity must be null in this example", slaEnforcement1.getElasticity());
+    }
+
+    @Test
+    public void testGenerateCloudApplication() throws Exception {
+        CloudApplicationDesc desc = new CloudApplicationDesc();
+        CloudApplicationType cloudApplicationType = new CloudApplicationType();
+        cloudApplicationType.setName("Application name");
+        cloudApplicationType.setDescription("My description");
+        org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.RequirementsType requirementsType =
+                new org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.RequirementsType();
+        cloudApplicationType.setRequirements(requirementsType);
+        CapabilitiesType capabilitiesType = new CapabilitiesType();
+        capabilitiesType.setApplication("My application");
+        capabilitiesType.setService("My service");
+        cloudApplicationType.setCapabilities(capabilitiesType);
+        XmlDeployableType xmlDeployableType = new XmlDeployableType();
+        xmlDeployableType.setId("xmlid");
+        xmlDeployableType.setName("xmlName");
+        xmlDeployableType.setXmlContent("<content></content>");
+        org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.xml.v1.generated.RequirementsType requirementsType1 =
+                new org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.xml.v1.generated.RequirementsType();
+        xmlDeployableType.setRequirements(requirementsType1);
+        DeployablesType deployablesType = new DeployablesType();
+        List<Object> listDeployables = deployablesType.getXmlDeployableOrArtefactDeployable();
+        listDeployables.add(xmlDeployableType);
+        cloudApplicationType.setDeployables(deployablesType);
+
+        // Generate xml
+        ObjectFactory objectFactory = new ObjectFactory();
+        String xml = desc.generateCloudApplication(objectFactory.createCloudApplication(cloudApplicationType));
+
+        CloudApplicationDesc desc1 = new CloudApplicationDesc(xml);
+        CloudApplicationType cloudApplication = (CloudApplicationType) desc1.getCloudApplication();
+        Assert.assertEquals("Wrong application name", cloudApplication.getName(), "Application name");
+        Assert.assertEquals("Wrong application description", cloudApplication.getDescription(), "My description");
     }
 }

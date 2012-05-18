@@ -28,6 +28,8 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication;
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractXmlLoader;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CloudApplicationType;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import java.net.URL;
 import java.util.List;
 
@@ -38,6 +40,11 @@ import java.util.List;
 public class CloudApplicationXmlLoader extends AbstractXmlLoader {
 
     Object cloudApplication;
+
+    /**
+     * Default contructor
+     */
+    public CloudApplicationXmlLoader() {}
 
     /**
      * Constructor. Loads the cloud-application
@@ -82,6 +89,18 @@ public class CloudApplicationXmlLoader extends AbstractXmlLoader {
             return CloudApplicationType.class;
         }
         return null;
+    }
+
+    /**
+     * Generate xml content
+     * @param cloudApplication root element
+     * @param cloudApplicationVersion cloud-application version
+     * @return xml content
+     * @throws JAXBException
+     */
+    public String toXml(JAXBElement<CloudApplicationType> cloudApplication, CloudApplicationVersion cloudApplicationVersion,
+                        final List<URL> xsdURLs) throws Exception {
+        return toXml(cloudApplication, xsdURLs, getRootClass(cloudApplicationVersion), new CloudApplicationNSPrefixMapper());
     }
 
     /**

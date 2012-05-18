@@ -25,9 +25,12 @@
 
 package org.ow2.jonas.jpaas.clouddescriptors.common;
 
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
+
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -38,6 +41,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -48,6 +52,11 @@ import java.util.List;
  * @author Mohammed Boukada
  */
 public class AbstractXmlLoader {
+
+    /**
+     * Namespace prefix mapper property name
+     */
+    private final String NAMESPACE_PREFIX_MAPPER_PROPERTY_NAME = "com.sun.xml.bind.namespacePrefixMapper";
 
     /**
      * Verifies an XML file against an XSD and instantiates it using a given
@@ -118,6 +127,32 @@ public class AbstractXmlLoader {
         value = root.getValue();
 
         return value;
+    }
+
+    /**
+     * Generate xml content
+     * @param jaxbElement root element
+     * @param rootClass Root class used for instantiating JAXB.
+     * @return xml content
+     * @throws javax.xml.bind.JAXBException
+     */
+    public String toXml(JAXBElement<?> jaxbElement, final List<URL> xsdURLs, final Class<?> rootClass,
+                        NamespacePrefixMapper mapper) throws Exception {
+        JAXBContext jc = JAXBContext.newInstance(rootClass.getPackage().getName(), AbstractXmlLoader.class.getClassLoader());
+        Marshaller marshaller = jc.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+        // Load schemas
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        List<Source> xsdSources = getSources(xsdURLs);
+        Schema schema = schemaFactory.newSchema(xsdSources.toArray(new Source[xsdSources.size()]));
+        marshaller.setSchema(schema);
+        if (mapper != null) {
+            marshaller.setProperty(NAMESPACE_PREFIX_MAPPER_PROPERTY_NAME, mapper);
+        }
+        StringWriter sw = new StringWriter();
+        marshaller.marshal(jaxbElement, sw);
+        return sw.toString();
     }
 
     /**

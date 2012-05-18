@@ -26,6 +26,7 @@
 package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication;
 
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractDesc;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CloudApplicationType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.deployable.artefact.ArtefactVersion;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.deployable.xml.XmlVersion;
 import org.ow2.util.log.Log;
@@ -33,6 +34,7 @@ import org.ow2.util.log.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.xml.bind.JAXBElement;
 import java.io.File;
 import java.net.URL;
 import java.util.LinkedHashMap;
@@ -77,6 +79,21 @@ public class CloudApplicationDesc extends AbstractDesc {
     private static final String CLOUD_APPLICATION_PROPERTIES_NAME = "properties/cloud-application.properties";
 
     /**
+     * Default cloud application version
+     */
+    private static final CloudApplicationVersion DEFAULT_CLOUD_APPLICATION_VERSION = CloudApplicationVersion.CLOUD_APPLICATION_1;
+
+    /**
+     * Default artefact version
+     */
+    private static final ArtefactVersion DEFAULT_ARTEFACT_VERSION = ArtefactVersion.ARTEFACT_1;
+
+    /**
+     * Default xml version
+     */
+    private static final XmlVersion DEFAULT_XML_VERSION = XmlVersion.XML_1;
+
+    /**
      * Default constructor
      */
     public CloudApplicationDesc() throws Exception {
@@ -119,6 +136,18 @@ public class CloudApplicationDesc extends AbstractDesc {
      */
     private void setXsdUrls() throws Exception {
         initArtefactAndXmlVersions();
+        setXsdUrls(cloudApplicationVersion, artefactVersion, xmlVersion);
+    }
+
+    /**
+     * Set XSD URLs
+     * @param cloudApplicationVersion
+     * @param artefactVersion
+     * @param xmlVersion
+     * @throws Exception
+     */
+    private void setXsdUrls(CloudApplicationVersion cloudApplicationVersion, ArtefactVersion artefactVersion,
+                            XmlVersion xmlVersion) throws Exception {
 
         // Get xsd paths
         String xsdCloudApplication = CloudApplicationPropertiesManager.getXsdCloudApplicationPath(cloudApplicationVersion);
@@ -172,7 +201,8 @@ public class CloudApplicationDesc extends AbstractDesc {
     public void loadCloudApplication(final URL urlCloudApplication) throws Exception {
         initCloudApplicationVersion(urlCloudApplication);
         setXsdUrls();
-        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader(urlCloudApplication, this.cloudApplicationVersion, this.xsdUrls);
+        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader(urlCloudApplication,
+                this.cloudApplicationVersion, this.xsdUrls);
         this.cloudApplication = cloudApplicationXmlLoader.getCloudApplication();
     }
 
@@ -186,8 +216,21 @@ public class CloudApplicationDesc extends AbstractDesc {
     public void loadCloudApplication(final String cloudApplication) throws Exception {
         initCloudApplicationVersion(cloudApplication);
         setXsdUrls();
-        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader(cloudApplication, this.cloudApplicationVersion, this.xsdUrls);
+        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader(cloudApplication,
+                this.cloudApplicationVersion, this.xsdUrls);
         this.cloudApplication = cloudApplicationXmlLoader.getCloudApplication();
+    }
+
+    /**
+     * Generate cloud-application xml
+     * @param cloudApplication
+     * @return xml content
+     * @throws Exception
+     */
+    public String generateCloudApplication(JAXBElement<CloudApplicationType> cloudApplication) throws Exception {
+        CloudApplicationXmlLoader cloudApplicationXmlLoader = new CloudApplicationXmlLoader();
+        setXsdUrls(DEFAULT_CLOUD_APPLICATION_VERSION, DEFAULT_ARTEFACT_VERSION, DEFAULT_XML_VERSION);
+        return cloudApplicationXmlLoader.toXml(cloudApplication, DEFAULT_CLOUD_APPLICATION_VERSION, this.xsdUrls);
     }
 
     /**
@@ -222,6 +265,7 @@ public class CloudApplicationDesc extends AbstractDesc {
         if (document != null) {
             getNamespace(document);
         }
-        this.cloudApplicationVersion = CloudApplicationPropertiesManager.getCloudApplicationVersion(new LinkedList<String>(this.namespaces.keySet()));
+        this.cloudApplicationVersion = CloudApplicationPropertiesManager.getCloudApplicationVersion(
+                new LinkedList<String>(this.namespaces.keySet()));
     }
 }
