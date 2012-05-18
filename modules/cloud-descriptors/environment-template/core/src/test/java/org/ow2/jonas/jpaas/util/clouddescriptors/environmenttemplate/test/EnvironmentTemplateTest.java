@@ -35,6 +35,7 @@ import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.gener
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jonas.v1.generated.JonasNodeTemplateType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.EnvironmentTemplateType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.TopologyTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.ObjectFactory;
 
 import java.net.URL;
 import java.util.List;
@@ -159,6 +160,26 @@ public class EnvironmentTemplateTest {
         org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.datasource.v1.generated.ConfigurationType datasourceConf = datasourceRelationshipTemplate.getConfiguration();
         Assert.assertNotNull("datasource Configuration cannot be null", datasourceConf);
         Assert.assertEquals("Wronf jndi", datasourceConf.getJndi(), "jdbc_1");
+    }
 
+    @Test
+    public void testGenerateEnvironmentTemplate() throws Exception {
+        EnvironmentTemplateDesc desc = new EnvironmentTemplateDesc();
+        EnvironmentTemplateType environmentTemplateType = new EnvironmentTemplateType();
+        environmentTemplateType.setName("env name");
+        environmentTemplateType.setDescription("env description");
+        environmentTemplateType.setMultitenancyLevel("SharedHardware");
+        TopologyTemplateType topologyTemplate = new TopologyTemplateType();
+        environmentTemplateType.setTopologyTemplate(topologyTemplate);
+
+        // Generate xml
+        ObjectFactory objectFactory = new ObjectFactory();
+        String xml = desc.generateEnvironmentTemplate(objectFactory.createEnvironmentTemplate(environmentTemplateType));
+
+        EnvironmentTemplateDesc desc1 = new EnvironmentTemplateDesc(xml);
+        EnvironmentTemplateType environmentTemplate = (EnvironmentTemplateType) desc1.getEnvironmentTemplate();
+        Assert.assertEquals("Wrong name", environmentTemplate.getName(), "env name");
+        Assert.assertEquals("Wrong description", environmentTemplate.getDescription(), "env description");
+        Assert.assertEquals("Wrong multitenancy level", environmentTemplate.getMultitenancyLevel(), "SharedHardware");
     }
 }

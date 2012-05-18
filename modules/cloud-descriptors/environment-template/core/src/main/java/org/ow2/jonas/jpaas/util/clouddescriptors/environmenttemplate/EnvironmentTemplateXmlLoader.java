@@ -28,6 +28,7 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate;
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractXmlLoader;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.EnvironmentTemplateType;
 
+import javax.xml.bind.JAXBElement;
 import java.net.URL;
 import java.util.List;
 
@@ -38,6 +39,11 @@ import java.util.List;
 public class EnvironmentTemplateXmlLoader extends AbstractXmlLoader {
 
     Object environmentTemplate;
+
+    /**
+     * Default constructor
+     */
+    public EnvironmentTemplateXmlLoader() {}
 
     /**
      * Constructor. Loads the environment-template
@@ -82,6 +88,18 @@ public class EnvironmentTemplateXmlLoader extends AbstractXmlLoader {
             return EnvironmentTemplateType.class;
         }
         return null;
+    }
+
+    /**
+     * Generate xml content
+     * @param environmentTemplate root element
+     * @param environmentTemplateVersion environment-template version
+     * @return xml content
+     * @throws javax.xml.bind.JAXBException
+     */
+    public String toXml(JAXBElement<EnvironmentTemplateType> environmentTemplate, EnvironmentTemplateVersion environmentTemplateVersion,
+                        final List<URL> xsdURLs) throws Exception {
+        return toXml(environmentTemplate, xsdURLs, getRootClass(environmentTemplateVersion), new EnvironmentTemplateNSPrefixMapper());
     }
 
     /**

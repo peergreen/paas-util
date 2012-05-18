@@ -26,6 +26,7 @@
 package org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate;
 
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractDesc;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.EnvironmentTemplateType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.externaldb.ExternalDBVersion;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.jk.JkVersion;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.jonas.JonasVersion;
@@ -36,6 +37,7 @@ import org.ow2.util.log.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import javax.xml.bind.JAXBElement;
 import java.io.File;
 import java.net.URL;
 import java.util.LinkedHashMap;
@@ -94,6 +96,36 @@ public class EnvironmentTemplateDesc extends AbstractDesc {
     private static final String ENVIRONMENT_TEMPLATE_PROPERTIES_NAME = "properties/environment-template.properties";
 
     /**
+     * Default environment-template version
+     */
+    private static final EnvironmentTemplateVersion DEFAULT_ENVIRONMENT_TEMPLATE_VERSION = EnvironmentTemplateVersion.ENVIRONMENT_TEMPLATE_1;
+
+    /**
+     * Default jk version
+     */
+    private static final JkVersion DEFAULT_JK_VERSION = JkVersion.JK_1;
+
+    /**
+     * Default jonas version
+     */
+    private static final JonasVersion DEFAULT_JONAS_VERSION = JonasVersion.JONAS_1;
+
+    /**
+     * Default external-db version
+     */
+    private static final ExternalDBVersion DEFAULT_EXTERNAL_DB_VERSION = ExternalDBVersion.EXTERNAL_DB_1;
+
+    /**
+     * Default connector version
+     */
+    private static final ConnectorVersion DEFAULT_CONNECTOR_VERSION = ConnectorVersion.CONNECTOR_1;
+
+    /**
+     * Default datasource version
+     */
+    private static final DatasourceVersion DEFAULT_DATASOURCE_VERSION = DatasourceVersion.DATASOURCE_1;
+
+    /**
      * Default constructor
      */
     public EnvironmentTemplateDesc() throws Exception {
@@ -136,6 +168,22 @@ public class EnvironmentTemplateDesc extends AbstractDesc {
      */
     private void setXsdUrls() throws Exception {
         initVersions();
+        setXsdUrls(environmentTemplateVersion, jkVersion, jonasVersion, externalDBVersion, connectorVersion, datasourceVersion);
+    }
+
+    /**
+     * Set XSD URLs
+     * @param environmentTemplateVersion
+     * @param jkVersion
+     * @param jonasVersion
+     * @param externalDBVersion
+     * @param connectorVersion
+     * @param datasourceVersion
+     * @throws Exception
+     */
+    private void setXsdUrls(EnvironmentTemplateVersion environmentTemplateVersion, JkVersion jkVersion, JonasVersion jonasVersion,
+                            ExternalDBVersion externalDBVersion, ConnectorVersion connectorVersion, DatasourceVersion datasourceVersion)
+                            throws Exception {
 
         // Get xsd path
         String xsdEnvironmentTemplate = EnvironmentTemplatePropertiesManager.getXsdEnvironmentTemplatePath(environmentTemplateVersion);
@@ -225,6 +273,19 @@ public class EnvironmentTemplateDesc extends AbstractDesc {
         EnvironmentTemplateXmlLoader environmentTemplateXmlLoader = new EnvironmentTemplateXmlLoader(environmentTemplate,
                 this.environmentTemplateVersion, this.xsdUrls);
         this.environmentTemplate = environmentTemplateXmlLoader.getEnvironmentTemplate();
+    }
+
+    /**
+     * Generate environment-template xml
+     * @param environmentTemplate
+     * @return xml content
+     * @throws Exception
+     */
+    public String generateEnvironmentTemplate(JAXBElement<EnvironmentTemplateType> environmentTemplate) throws Exception {
+        EnvironmentTemplateXmlLoader environmentTemplateXmlLoader = new EnvironmentTemplateXmlLoader();
+        setXsdUrls(DEFAULT_ENVIRONMENT_TEMPLATE_VERSION, DEFAULT_JK_VERSION, DEFAULT_JONAS_VERSION, DEFAULT_EXTERNAL_DB_VERSION,
+                   DEFAULT_CONNECTOR_VERSION, DEFAULT_DATASOURCE_VERSION);
+        return environmentTemplateXmlLoader.toXml(environmentTemplate, DEFAULT_ENVIRONMENT_TEMPLATE_VERSION, this.xsdUrls);
     }
 
     /**
