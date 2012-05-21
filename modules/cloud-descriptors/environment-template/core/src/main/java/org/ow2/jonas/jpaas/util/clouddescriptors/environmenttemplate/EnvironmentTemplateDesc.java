@@ -159,7 +159,7 @@ public class EnvironmentTemplateDesc extends AbstractDesc {
     private void init() throws Exception {
         this.xsdUrls = new LinkedList<URL> ();
         this.namespaces = new LinkedHashMap<String, Node>();
-        EnvironmentTemplatePropertiesManager.setProperties(loadProperties(ENVIRONMENT_TEMPLATE_PROPERTIES_NAME));
+        EnvironmentTemplatePropertiesManager.setProperties(loadProperties(ENVIRONMENT_TEMPLATE_PROPERTIES_NAME, getClass().getClassLoader()));
     }
 
     /**

@@ -104,7 +104,7 @@ public class DeploymentDesc extends AbstractDesc {
     private void init() throws Exception {
         this.xsdUrls = new ArrayList<URL>();
         this.namespaces = new LinkedHashMap<String, Node>();
-        DeploymentPropertiesManager.setProperties(loadProperties(DEPLOYMENT_PROPERTIES_NAME));
+        DeploymentPropertiesManager.setProperties(loadProperties(DEPLOYMENT_PROPERTIES_NAME, getClass().getClassLoader()));
     }
 
     /**

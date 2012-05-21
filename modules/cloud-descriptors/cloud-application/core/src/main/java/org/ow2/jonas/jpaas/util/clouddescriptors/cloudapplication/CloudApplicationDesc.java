@@ -127,7 +127,7 @@ public class CloudApplicationDesc extends AbstractDesc {
     private void init() throws Exception {
         this.xsdUrls = new LinkedList<URL>();
         this.namespaces = new LinkedHashMap<String, Node> ();
-        CloudApplicationPropertiesManager.setProperties(loadProperties(CLOUD_APPLICATION_PROPERTIES_NAME));
+        CloudApplicationPropertiesManager.setProperties(loadProperties(CLOUD_APPLICATION_PROPERTIES_NAME, getClass().getClassLoader()));
     }
 
     /**

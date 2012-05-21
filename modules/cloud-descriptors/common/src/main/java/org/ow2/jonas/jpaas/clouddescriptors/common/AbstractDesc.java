@@ -40,9 +40,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -83,15 +82,9 @@ public class AbstractDesc {
      * @return properties
      * @throws Exception
      */
-    protected Properties loadProperties(String location) throws Exception {
+    protected Properties loadProperties(String location, ClassLoader classLoader) throws Exception {
         Properties properties = new Properties();
-        URL filename = getClass().getClassLoader().getResource(location);
-        FileInputStream input = null;
-        try {
-            input = new FileInputStream(filename.getFile());
-        } catch (FileNotFoundException e) {
-            throw new Exception("Cannot read " + location + " properties file", e);
-        }
+        InputStream input = classLoader.getResourceAsStream(location);
         try {
             properties.load(input);
         } catch (Exception e) {
