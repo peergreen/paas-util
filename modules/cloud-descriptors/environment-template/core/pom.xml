@@ -29,43 +29,43 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>jpaas-util-cloud-descriptors-environment-template</artifactId>
-    <groupId>org.ow2.jonas.jpaas</groupId>
+    <artifactId>environment-template</artifactId>
+    <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Environment template :: Core</name>
-  <artifactId>jpaas-util-cloud-descriptors-environment-template-core</artifactId>
+  <artifactId>environment-template-core</artifactId>
 
   <dependencies>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-common</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>common</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-external-db</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>environment-template-node-template-external-db</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-jk</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>environment-template-node-template-jk</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-jonas</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>environment-template-node-template-jonas</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-environment-template-topology-connector</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>environment-template-topology-connector</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-environment-template-topology-datasource</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>environment-template-topology-datasource</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -99,24 +99,24 @@
               <useDependenciesAsEpisodes>false</useDependenciesAsEpisodes>
               <episodes>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-jk</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>environment-template-node-template-jk</artifactId>
                 </episode>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-external-db</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>environment-template-node-template-external-db</artifactId>
                 </episode>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-environment-template-node-template-jonas</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>environment-template-node-template-jonas</artifactId>
                 </episode>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-environment-template-topology-connector</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>environment-template-topology-connector</artifactId>
                 </episode>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-environment-template-topology-datasource</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>environment-template-topology-datasource</artifactId>
                 </episode>
               </episodes>
               <args>

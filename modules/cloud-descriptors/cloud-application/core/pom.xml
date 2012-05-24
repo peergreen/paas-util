@@ -29,13 +29,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>jpaas-util-cloud-descriptors-cloud-application</artifactId>
-    <groupId>org.ow2.jonas.jpaas</groupId>
+    <artifactId>cloud-application</artifactId>
+    <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <name>JPaaS Util :: Modules :: Cloud descriptors :: Cloud application :: Core</name>
-  <artifactId>jpaas-util-cloud-descriptors-cloud-application-core</artifactId>
+  <artifactId>cloud-application-core</artifactId>
 
   <dependencies>
     <dependency>
@@ -50,18 +50,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-cloud-application-deployable-artefact</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>cloud-application-deployable-artefact</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-cloud-application-deployable-xml</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>cloud-application-deployable-xml</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.ow2.jonas.jpaas</groupId>
-      <artifactId>jpaas-util-cloud-descriptors-common</artifactId>
+      <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+      <artifactId>common</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
@@ -89,13 +89,13 @@
               <useDependenciesAsEpisodes>false</useDependenciesAsEpisodes>
               <episodes>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-cloud-application-deployable-artefact</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>cloud-application-deployable-artefact</artifactId>
                   <version>${project.version}</version>
                 </episode>
                 <episode>
-                  <groupId>org.ow2.jonas.jpaas</groupId>
-                  <artifactId>jpaas-util-cloud-descriptors-cloud-application-deployable-xml</artifactId>
+                  <groupId>org.ow2.jonas.jpaas.util.cloud-desc</groupId>
+                  <artifactId>cloud-application-deployable-xml</artifactId>
                   <version>${project.version}</version>
                 </episode>
               </episodes>
