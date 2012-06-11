@@ -27,6 +27,11 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate;
 
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractDesc;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.EnvironmentTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.connector.v1.generated.ConnectorRelationshipTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.datasource.v1.generated.DatasourceRelationshipTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.externaldb.v1.generated.ExternalDBNodeTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.JkNodeTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jonas.v1.generated.JonasNodeTemplateType;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.externaldb.ExternalDBVersion;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.jk.JkVersion;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.jonas.JonasVersion;
@@ -321,5 +326,83 @@ public class EnvironmentTemplateDesc extends AbstractDesc {
             getNamespace(document);
         }
         this.environmentTemplateVersion = EnvironmentTemplatePropertiesManager.getEnvironmentTemplateVersion(new LinkedList<String>(this.namespaces.keySet()));
+    }
+
+    /**
+     * Get nodes template from environment-template
+     * @param topologyTemplateList
+     * @return
+     */
+    public List<Object> getNodesTemplate(List<Object> topologyTemplateList) {
+        List<Object> nodesTemplate = new LinkedList<Object>();
+        for (Object object : topologyTemplateList) {
+            if (object instanceof JkNodeTemplateType
+                    || object instanceof ExternalDBNodeTemplateType
+                    || object instanceof JonasNodeTemplateType) {
+                nodesTemplate.add(object);
+            }
+        }
+        return nodesTemplate;
+    }
+
+    /**
+     * Get relationships template from environment-template
+     * @param topologyTemplateList
+     * @return
+     */
+    public List<Object> getRelationshipsTemplate(List<Object> topologyTemplateList) {
+        List<Object> relationshipsTemplate = new LinkedList<Object>();
+        for (Object object : topologyTemplateList) {
+            if (object instanceof ConnectorRelationshipTemplateType
+                    || object instanceof DatasourceRelationshipTemplateType) {
+                relationshipsTemplate.add(object);
+            }
+        }
+        return relationshipsTemplate;
+    }
+
+    /**
+     * Whether the object is an instance of JkNodeTemplate
+     * @param object
+     * @return
+     */
+    public boolean isJkNodeTemplate(Object object) {
+        return object instanceof JkNodeTemplateType;
+    }
+
+    /**
+     * Whether the object is an instance of ExternalDBNoteTemplate
+     * @param object
+     * @return
+     */
+    public boolean isExternalDBNodeTemplate(Object object) {
+        return object instanceof ExternalDBNodeTemplateType;
+    }
+
+    /**
+     * Whether the object is instance of JonasNoteTemplate
+     * @param object
+     * @return
+     */
+    public boolean isJonasNodeTemplate(Object object) {
+        return object instanceof JonasNodeTemplateType;
+    }
+
+    /**
+     * Whether the object is an instance of ConnectorRelationshipTemplate
+     * @param object
+     * @return
+     */
+    public boolean isConnectorRelationshipTemplate(Object object) {
+        return object instanceof ConnectorRelationshipTemplateType;
+    }
+
+    /**
+     * Whether the object is an instance of DatasourceRelationshipTemplate
+     * @param object
+     * @return
+     */
+    public boolean isDatasourceRelationshipTemplate(Object object) {
+        return object instanceof DatasourceRelationshipTemplateType;
     }
 }

@@ -182,4 +182,28 @@ public class EnvironmentTemplateTest {
         Assert.assertEquals("Wrong description", environmentTemplate.getDescription(), "env description");
         Assert.assertEquals("Wrong multitenancy level", environmentTemplate.getMultitenancyLevel(), "SharedHardware");
     }
+    
+    @Test
+    public void testNodesAndRelationships() throws Exception {
+        URL urlEnvironmentTemplate = this.getClass().getClassLoader().getResource(PATH_EXAMPLE_1);
+        EnvironmentTemplateDesc desc = new EnvironmentTemplateDesc(urlEnvironmentTemplate);
+        EnvironmentTemplateType environmentTemplate = (EnvironmentTemplateType) desc.getEnvironmentTemplate();
+
+        TopologyTemplateType topologyTemplate = environmentTemplate.getTopologyTemplate();
+        List<Object> listTopologyTemplate = topologyTemplate.getJkNodeTemplateOrJonasNodeTemplateOrExternalDbNodeTemplate();
+
+        List<Object> listNodesTemplate = desc.getNodesTemplate(listTopologyTemplate);
+        Assert.assertTrue("Missing object in nodes template list", listNodesTemplate.contains(listTopologyTemplate.get(0)));
+        Assert.assertTrue("Must be an instance of JkNodeTemplate", desc.isJkNodeTemplate(listTopologyTemplate.get(0)));
+        Assert.assertTrue("Missing object in nodes template list", listNodesTemplate.contains(listTopologyTemplate.get(1)));
+        Assert.assertTrue("Must be an instance of JonasNodeTemplate", desc.isJonasNodeTemplate(listTopologyTemplate.get(1)));
+        Assert.assertTrue("Missing object in nodes template list", listNodesTemplate.contains(listTopologyTemplate.get(3)));
+        Assert.assertTrue("Must be an instance of ExternalDBNodeTemplate", desc.isExternalDBNodeTemplate(listTopologyTemplate.get(3)));
+
+        List<Object> listRelationshipsTemplate = desc.getRelationshipsTemplate(listTopologyTemplate);
+        Assert.assertTrue("Missing object in relationships template list", listRelationshipsTemplate.contains(listTopologyTemplate.get(2)));
+        Assert.assertTrue("Must be an instance of ConnectorRelationshipTemplate", desc.isConnectorRelationshipTemplate(listTopologyTemplate.get(2)));
+        Assert.assertTrue("Missing object in relationships template list", listRelationshipsTemplate.contains(listTopologyTemplate.get(4)));
+        Assert.assertTrue("Must be an instance of DatasouceRelationshipTemplate", desc.isDatasourceRelationshipTemplate(listTopologyTemplate.get(4)));
+    }
 }
