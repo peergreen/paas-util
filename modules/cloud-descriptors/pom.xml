@@ -45,18 +45,11 @@
     <module>environment-template</module>
   </modules>
 
-  <properties>
-    <jaxb.version>2.2.5</jaxb.version>
-    <jaxb-api.version>${jaxb.version}</jaxb-api.version>
-    <jaxb-impl.version>${jaxb.version}</jaxb-impl.version>
-    <jaxb-osgi.version>2.2.1</jaxb-osgi.version>
-  </properties>
-
   <dependencies>
     <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-osgi</artifactId>
-      <version>${jaxb-osgi.version}</version>
+      <groupId>org.ow2.bundles</groupId>
+      <artifactId>ow2-bundles-externals-jaxb2</artifactId>
+      <version>${ow2-bundles.version}</version>
     </dependency>
   </dependencies>
 

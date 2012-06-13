@@ -46,7 +46,7 @@
   <properties>
     <ipojo-maven-plugin.version>1.8.0</ipojo-maven-plugin.version>
     <maven.bundle.plugin.version>2.3.7</maven.bundle.plugin.version>
-    <ow2-bundles.version>1.0.34-SNAPSHOT</ow2-bundles.version>
+    <ow2-bundles.version>1.0.31</ow2-bundles.version>
   </properties>
 
   <build>
@@ -104,7 +104,7 @@
         <plugin>
           <groupId>org.jvnet.jaxb2.maven2</groupId>
           <artifactId>maven-jaxb2-plugin</artifactId>
-          <version>0.8.1</version>
+          <version>0.8.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
