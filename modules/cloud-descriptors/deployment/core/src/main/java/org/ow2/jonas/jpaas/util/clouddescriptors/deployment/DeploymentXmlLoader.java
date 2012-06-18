@@ -59,7 +59,7 @@ public class DeploymentXmlLoader extends AbstractXmlLoader {
         this.deployment = loadSchemaAndFile(xsdURLs,
                 DeploymentPropertiesManager.getDeploymentXMLNS(deploymentVersion),
                 DeploymentPropertiesManager.getDeploymentSchemaLocation(deploymentVersion), "deployment",
-                getRootClass(deploymentVersion), deploymentURL);
+                deploymentURL, getRootClass(deploymentVersion));
     }
 
     /**
@@ -76,7 +76,7 @@ public class DeploymentXmlLoader extends AbstractXmlLoader {
         this.deployment = loadSchemaAndFile(xsdURLs,
                 DeploymentPropertiesManager.getDeploymentXMLNS(deploymentVersion),
                 DeploymentPropertiesManager.getDeploymentSchemaLocation(deploymentVersion), "deployment",
-                getRootClass(deploymentVersion), xml);
+                xml, getRootClass(deploymentVersion));
     }
 
     /**
@@ -99,7 +99,7 @@ public class DeploymentXmlLoader extends AbstractXmlLoader {
      */
     public String toXml(JAXBElement<DeploymentType> deployment, DeploymentVersion deploymentVersion,
                         final List<URL> xsdURLs) throws Exception {
-        return toXml(deployment, xsdURLs, getRootClass(deploymentVersion), null);
+        return toXml(deployment, xsdURLs, null ,getRootClass(deploymentVersion));
     }
 
     /**

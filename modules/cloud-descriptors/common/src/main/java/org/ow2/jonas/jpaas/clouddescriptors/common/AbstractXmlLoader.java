@@ -68,16 +68,16 @@ public class AbstractXmlLoader {
      *        the XML
      * @param xmlRoot Root element of the XML (for completing the XML if XSD
      *        xmlns is missing)
-     * @param rootClass Root class used for instantiating JAXB.
+     * @param rootClasses Root class used for instantiating JAXB.
      * @param urlXML XML to load.
      * @return XML loaded using JAXB and the rootClass.
      * @throws Exception
      */
     public <T> T loadSchemaAndFile(final List<URL> xsdPaths, final String xmlns, final String schemaLocation,
-                                   final String xmlRoot, final Class<T> rootClass, final URL urlXML)
+                                   final String xmlRoot, final URL urlXML,  final Class<T> ... rootClasses)
             throws Exception {
         String xml = readURL(urlXML);
-        return loadSchemaAndFile(xsdPaths, xmlns, schemaLocation, xmlRoot, rootClass, xml);
+        return loadSchemaAndFile(xsdPaths, xmlns, schemaLocation, xmlRoot, xml, rootClasses);
     }
 
     /**
@@ -90,16 +90,16 @@ public class AbstractXmlLoader {
      *        the XML
      * @param xmlRoot Root element of the XML (for completing the XML if XSD
      *        xmlns is missing)
-     * @param rootClass Root class used for instantiating JAXB.
+     * @param rootClasses Root class used for instantiating JAXB.
      * @param xml XML to load.
      * @return XML loaded using JAXB and the rootClass.
      * @throws Exception
      */
     public <T> T loadSchemaAndFile(final List<URL> xsdPaths, final String xmlns, final String schemaLocation,
-                                   final String xmlRoot, final Class<T> rootClass, String xml)
+                                   final String xmlRoot, String xml, final Class<T> ... rootClasses)
             throws Exception {
 
-        JAXBContext jc = JAXBContext.newInstance(rootClass.getPackage().getName(), AbstractXmlLoader.class.getClassLoader());
+        JAXBContext jc = JAXBContext.newInstance(rootClasses);
         Unmarshaller unMarshaller = jc.createUnmarshaller();
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         List<Source> xsdSources = getSources(xsdPaths);
@@ -123,7 +123,7 @@ public class AbstractXmlLoader {
         InputStream xmlInputStream = new ByteArrayInputStream(xml.getBytes());
 
         T value;
-        JAXBElement<T> root = unMarshaller.unmarshal(new StreamSource(xmlInputStream), rootClass);
+        JAXBElement<T> root = unMarshaller.unmarshal(new StreamSource(xmlInputStream), rootClasses[0]);
         value = root.getValue();
 
         return value;
@@ -132,13 +132,13 @@ public class AbstractXmlLoader {
     /**
      * Generate xml content
      * @param jaxbElement root element
-     * @param rootClass Root class used for instantiating JAXB.
+     * @param rootClasses Root class used for instantiating JAXB.
      * @return xml content
      * @throws javax.xml.bind.JAXBException
      */
-    public String toXml(JAXBElement<?> jaxbElement, final List<URL> xsdURLs, final Class<?> rootClass,
-                        NamespacePrefixMapper mapper) throws Exception {
-        JAXBContext jc = JAXBContext.newInstance(rootClass.getPackage().getName(), AbstractXmlLoader.class.getClassLoader());
+    public String toXml(JAXBElement<?> jaxbElement, final List<URL> xsdURLs, NamespacePrefixMapper mapper,
+                        final Class<?> ... rootClasses) throws Exception {
+        JAXBContext jc = JAXBContext.newInstance(rootClasses);
         Marshaller marshaller = jc.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 

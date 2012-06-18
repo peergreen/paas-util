@@ -27,6 +27,8 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication;
 
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractXmlLoader;
 import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated.CloudApplicationType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.artefact.v1.generated.ArtefactDeployableType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.xml.v1.generated.XmlDeployableType;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -60,7 +62,7 @@ public class CloudApplicationXmlLoader extends AbstractXmlLoader {
         this.cloudApplication = loadSchemaAndFile(xsdURLs,
                 CloudApplicationPropertiesManager.getCloudApplicationXMLNS(cloudApplicationVersion),
                 CloudApplicationPropertiesManager.getCloudApplicationSchemaLocation(cloudApplicationVersion), "cloud-application",
-                getRootClass(cloudApplicationVersion), cloudApplicationURL);
+                cloudApplicationURL, getRootClasses(cloudApplicationVersion));
     }
 
     /**
@@ -77,16 +79,16 @@ public class CloudApplicationXmlLoader extends AbstractXmlLoader {
         this.cloudApplication = loadSchemaAndFile(xsdURLs,
                 CloudApplicationPropertiesManager.getCloudApplicationXMLNS(cloudApplicationVersion),
                 CloudApplicationPropertiesManager.getCloudApplicationSchemaLocation(cloudApplicationVersion), "cloud-application",
-                getRootClass(cloudApplicationVersion), xml);
+                xml, getRootClasses(cloudApplicationVersion));
     }
 
     /**
      * @param cloudApplicationVersion {@link CloudApplicationVersion}
      * @return the correct root class according to the cloud-application version
      */
-    private Class getRootClass(final CloudApplicationVersion cloudApplicationVersion) {
+    private Class[] getRootClasses(final CloudApplicationVersion cloudApplicationVersion) {
         if (CloudApplicationVersion.CLOUD_APPLICATION_1.equals(cloudApplicationVersion)) {
-            return CloudApplicationType.class;
+            return new Class[]{CloudApplicationType.class, ArtefactDeployableType.class, XmlDeployableType.class};
         }
         return null;
     }
@@ -100,7 +102,7 @@ public class CloudApplicationXmlLoader extends AbstractXmlLoader {
      */
     public String toXml(JAXBElement<CloudApplicationType> cloudApplication, CloudApplicationVersion cloudApplicationVersion,
                         final List<URL> xsdURLs) throws Exception {
-        return toXml(cloudApplication, xsdURLs, getRootClass(cloudApplicationVersion), new CloudApplicationNSPrefixMapper());
+        return toXml(cloudApplication, xsdURLs, new CloudApplicationNSPrefixMapper(), getRootClasses(cloudApplicationVersion));
     }
 
     /**

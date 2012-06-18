@@ -27,6 +27,11 @@ package org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate;
 
 import org.ow2.jonas.jpaas.clouddescriptors.common.AbstractXmlLoader;
 import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.v1.generated.EnvironmentTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.connector.v1.generated.ConnectorRelationshipTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.datasource.v1.generated.DatasourceRelationshipTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.externaldb.v1.generated.ExternalDBNodeTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.JkNodeTemplateType;
+import org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jonas.v1.generated.JonasNodeTemplateType;
 
 import javax.xml.bind.JAXBElement;
 import java.net.URL;
@@ -59,7 +64,7 @@ public class EnvironmentTemplateXmlLoader extends AbstractXmlLoader {
         this.environmentTemplate = loadSchemaAndFile(xsdURLs,
                 EnvironmentTemplatePropertiesManager.getEnvironmentTemplateXMLNS(environmentTemplateVersion),
                 EnvironmentTemplatePropertiesManager.getEnvironmentTemplateSchemaLocation(environmentTemplateVersion), "environment-template",
-                getRootClass(environmentTemplateVersion), environmentTemplateURL);
+                environmentTemplateURL, getRootClasses(environmentTemplateVersion));
     }
 
     /**
@@ -76,16 +81,18 @@ public class EnvironmentTemplateXmlLoader extends AbstractXmlLoader {
         this.environmentTemplate = loadSchemaAndFile(xsdURLs,
                 EnvironmentTemplatePropertiesManager.getEnvironmentTemplateXMLNS(environmentTemplateVersion),
                 EnvironmentTemplatePropertiesManager.getEnvironmentTemplateSchemaLocation(environmentTemplateVersion), "environment-template",
-                getRootClass(environmentTemplateVersion), xml);
+                xml, getRootClasses(environmentTemplateVersion));
     }
 
     /**
      * @param environmentTemplateVersion {@link EnvironmentTemplateVersion}
      * @return the correct root class according to the environment-template version
      */
-    private Class getRootClass(final EnvironmentTemplateVersion environmentTemplateVersion) {
+    private Class[] getRootClasses(final EnvironmentTemplateVersion environmentTemplateVersion) {
         if (EnvironmentTemplateVersion.ENVIRONMENT_TEMPLATE_1.equals(environmentTemplateVersion)) {
-            return EnvironmentTemplateType.class;
+            return new Class[]{EnvironmentTemplateType.class, ConnectorRelationshipTemplateType.class,
+                            DatasourceRelationshipTemplateType.class, JkNodeTemplateType.class,
+                            JonasNodeTemplateType.class, ExternalDBNodeTemplateType.class};
         }
         return null;
     }
@@ -99,7 +106,7 @@ public class EnvironmentTemplateXmlLoader extends AbstractXmlLoader {
      */
     public String toXml(JAXBElement<EnvironmentTemplateType> environmentTemplate, EnvironmentTemplateVersion environmentTemplateVersion,
                         final List<URL> xsdURLs) throws Exception {
-        return toXml(environmentTemplate, xsdURLs, getRootClass(environmentTemplateVersion), new EnvironmentTemplateNSPrefixMapper());
+        return toXml(environmentTemplate, xsdURLs, new EnvironmentTemplateNSPrefixMapper(), getRootClasses(environmentTemplateVersion));
     }
 
     /**
