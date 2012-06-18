@@ -53,6 +53,7 @@
               <generateDirectory>${project.build.directory}/generated-sources/jaxb/connector-v1/</generateDirectory>
               <schemaDirectory>src/main/resources/xml</schemaDirectory>
               <generatePackage>org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.connector.v1.generated</generatePackage>
+              <bindingDirectory>src/main/xjb</bindingDirectory>
               <strict>true</strict>
               <verbose>true</verbose>
               <addCompileSourceRoot>true</addCompileSourceRoot>
