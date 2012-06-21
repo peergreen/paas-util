@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.0"
            elementFormDefault="qualified"
            targetNamespace="http://jonas.ow2.org/ns/cloud/deployable/artefact/1.0"
            xmlns="http://jonas.ow2.org/ns/cloud/deployable/artefact/1.0">
@@ -29,8 +31,11 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:element name="artefact-deployable" type="artefactDeployableType">
+  <xs:element name="deployable" type="artefactDeployableType">
     <xs:annotation>
+      <xs:appinfo>
+        <jaxb:factoryMethod name="artefactDeployable" />
+      </xs:appinfo>
       <xs:documentation>
         <![CDATA[
           Artefact deployable

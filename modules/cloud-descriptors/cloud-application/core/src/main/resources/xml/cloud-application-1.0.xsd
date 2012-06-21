@@ -2,6 +2,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
            targetNamespace="http://jonas.ow2.org/ns/cloud/application/1.0"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.0"
            xmlns="http://jonas.ow2.org/ns/cloud/application/1.0"
            xmlns:artefact="http://jonas.ow2.org/ns/cloud/deployable/artefact/1.0"
            xmlns:embedded-xml="http://jonas.ow2.org/ns/cloud/deployable/xml/1.0">
@@ -155,8 +157,13 @@
       </xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="embedded-xml:xml-deployable" minOccurs="0"/>
-      <xs:element ref="artefact:artefact-deployable" minOccurs="0"/>
+      <xs:annotation>
+        <xs:appinfo>
+          <jaxb:property name="deployables"/>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:element ref="embedded-xml:deployable" minOccurs="0"/>
+      <xs:element ref="artefact:deployable" minOccurs="0"/>
     </xs:choice>
   </xs:complexType>
 

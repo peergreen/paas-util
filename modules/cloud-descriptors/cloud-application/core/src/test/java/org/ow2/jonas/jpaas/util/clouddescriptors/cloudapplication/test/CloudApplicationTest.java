@@ -102,7 +102,7 @@ public class CloudApplicationTest {
         // Gets deployables
         DeployablesType deployables = cloudApplication.getDeployables();
         Assert.assertNotNull("Deployables must be empty", deployables);
-        List<Object> listDeployables = deployables.getXmlDeployableOrArtefactDeployable();
+        List<Object> listDeployables = deployables.getDeployables();
 
         // Artefact deployable
         Assert.assertTrue("Must be an artefact deployable", (listDeployables.get(0) instanceof ArtefactDeployableType));
@@ -168,7 +168,7 @@ public class CloudApplicationTest {
         // Gets deployables
         DeployablesType deployables = cloudApplication.getDeployables();
         Assert.assertNotNull("Deployables must be empty", deployables);
-        List<Object> listDeployables = deployables.getXmlDeployableOrArtefactDeployable();
+        List<Object> listDeployables = deployables.getDeployables();
 
         // Artefact deployable
         Assert.assertTrue("Must be an artefact deployable", (listDeployables.get(0) instanceof ArtefactDeployableType));
@@ -210,7 +210,7 @@ public class CloudApplicationTest {
                 new org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.xml.v1.generated.RequirementsType();
         xmlDeployableType.setRequirements(requirementsType1);
         DeployablesType deployablesType = new DeployablesType();
-        List<Object> listDeployables = deployablesType.getXmlDeployableOrArtefactDeployable();
+        List<Object> listDeployables = deployablesType.getDeployables();
         listDeployables.add(xmlDeployableType);
         cloudApplicationType.setDeployables(deployablesType);
 

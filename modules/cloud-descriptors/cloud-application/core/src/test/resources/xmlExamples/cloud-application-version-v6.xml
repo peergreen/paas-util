@@ -65,7 +65,7 @@
       <!--
           Artefact : war
         -->
-      <artefact:artefact-deployable name="MyWar">
+      <artefact:deployable name="MyWar">
 
          <artefact:requirements>
             <!-- 'collocated-to' means 'must be hosted in the same container' -->
@@ -76,27 +76,27 @@
          </artefact:requirements>
          <artefact:sla-enforcement/>
 
-      </artefact:artefact-deployable>
+      </artefact:deployable>
 
       <!--
           Artefact : ear
         -->
-      <artefact:artefact-deployable name="myear">
+      <artefact:deployable name="myear">
          <artefact:requirements>
             <artefact:requirement>(specification=javaee5)</artefact:requirement>
          </artefact:requirements>
          <artefact:sla-enforcement/>
-      </artefact:artefact-deployable>
+      </artefact:deployable>
 
       <!--
           Artefact : osgibundle
         -->
-      <artefact:artefact-deployable name="mybundle">
+      <artefact:deployable name="mybundle">
          <artefact:requirements>
             <artefact:requirement>(specification=osgi-r43)</artefact:requirement>
          </artefact:requirements>
          <artefact:sla-enforcement/>
-      </artefact:artefact-deployable>
+      </artefact:deployable>
             
    </deployables>
 

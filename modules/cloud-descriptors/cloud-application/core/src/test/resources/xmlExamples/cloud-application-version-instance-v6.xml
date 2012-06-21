@@ -70,7 +70,7 @@
       <!--
           Artefact : war
         -->
-      <artefact:artefact-deployable name="MyWar" id="a1">
+      <artefact:deployable name="MyWar" id="a1">
 
          <artefact:location>path/to/MyWar</artefact:location>
 
@@ -94,40 +94,40 @@
            <!-- This artefact is a singleton -->
            <artefact:elasticity min="1" max="1"/>
          </artefact:sla-enforcement>
-      </artefact:artefact-deployable>
+      </artefact:deployable>
 
       <!--
           Artefact : XML content to define JMS objets (config admin)
           xml content may consist in deployment plan, data source, jndi entries, jvm properties and so on
         -->
-      <embedded-xml:xml-deployable name="jmsobjects" id="a2">
+      <embedded-xml:deployable name="jmsobjects" id="a2">
          <embedded-xml:xml-content><![CDATA[<xml></xml>]]></embedded-xml:xml-content>
          <embedded-xml:requirements>
             <embedded-xml:requirement>(collocated-to=myear)</embedded-xml:requirement>
          </embedded-xml:requirements>
-      </embedded-xml:xml-deployable>
+      </embedded-xml:deployable>
 
       <!--
           Artefact : ear
         -->
-      <artefact:artefact-deployable name="myear" id="a3">
+      <artefact:deployable name="myear" id="a3">
          <artefact:location>url</artefact:location>
          <artefact:requirements>
             <artefact:requirement>(specification=javaee5)</artefact:requirement>
          </artefact:requirements>
          <artefact:sla-enforcement/>
-      </artefact:artefact-deployable>
+      </artefact:deployable>
 
       <!--
           Artefact : osgibundle
         -->
-      <artefact:artefact-deployable name="mybundle" id="a4">
+      <artefact:deployable name="mybundle" id="a4">
          <artefact:location>url</artefact:location>
          <artefact:requirements>
             <artefact:requirement>(specification=osgi-r43)</artefact:requirement>
          </artefact:requirements>
          <artefact:sla-enforcement/>
-      </artefact:artefact-deployable>
+      </artefact:deployable>
 
    </deployables>
 
