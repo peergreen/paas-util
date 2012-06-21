@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.0"
            targetNamespace="http://jonas.ow2.org/ns/cloud/topology/relationship-template/datasource/1.0"
            xmlns="http://jonas.ow2.org/ns/cloud/topology/relationship-template/datasource/1.0">
 
@@ -29,8 +31,11 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:element name="datasource-relationship-template" type="datasourceRelationshipTemplateType">
+  <xs:element name="relationship-template" type="datasourceRelationshipTemplateType">
     <xs:annotation>
+      <xs:appinfo>
+        <jaxb:factoryMethod name="datasourceRelationshipTemplate" />
+      </xs:appinfo>
       <xs:documentation>
         <![CDATA[
           Datasource relationship template

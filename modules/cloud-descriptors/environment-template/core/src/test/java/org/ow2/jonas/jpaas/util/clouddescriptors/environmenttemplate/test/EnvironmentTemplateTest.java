@@ -62,7 +62,7 @@ public class EnvironmentTemplateTest {
 
         TopologyTemplateType topologyTemplate = environmentTemplate.getTopologyTemplate();
         Assert.assertNotNull("Topology-template cannot be null", topologyTemplate);
-        List<Object> listTopologyTemplate = topologyTemplate.getJkNodeTemplateOrJonasNodeTemplateOrExternalDbNodeTemplate();
+        List<Object> listTopologyTemplate = topologyTemplate.getNodesOrRelationshipsTemplates();
 
         // jk
         Assert.assertTrue("First element must be instance of JkNodeTemplateType", (listTopologyTemplate.get(0) instanceof JkNodeTemplateType));
@@ -170,6 +170,28 @@ public class EnvironmentTemplateTest {
         environmentTemplateType.setDescription("env description");
         environmentTemplateType.setMultitenancyLevel("SharedHardware");
         TopologyTemplateType topologyTemplate = new TopologyTemplateType();
+        List<Object> listTopologyTemplate = topologyTemplate.getNodesOrRelationshipsTemplates();
+        JkNodeTemplateType jkNodeTemplateType = new JkNodeTemplateType();
+        jkNodeTemplateType.setId("n1");
+        jkNodeTemplateType.setName("myrouter");
+        jkNodeTemplateType.setType("container");
+        org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.ConfigurationType jkConfig =
+                new org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.ConfigurationType();
+        jkConfig.setJkRef("apache-2.2-jk-1.2.25");
+        org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.SlaEnforcementType jkSla =
+                new org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.SlaEnforcementType();
+        org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.HealthType jkHealth =
+                new org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.HealthType();
+
+        org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.ElasticityType jkElasticity =
+                new org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.jk.v1.generated.ElasticityType();
+        jkElasticity.setMin(1);
+        jkElasticity.setMax(1);
+        jkSla.setHealth(jkHealth);
+        jkSla.setElasticity(jkElasticity);
+        jkNodeTemplateType.setConfiguration(jkConfig);
+        jkNodeTemplateType.setSlaEnforcement(jkSla);
+        listTopologyTemplate.add(jkNodeTemplateType);
         environmentTemplateType.setTopologyTemplate(topologyTemplate);
 
         // Generate xml
@@ -190,7 +212,7 @@ public class EnvironmentTemplateTest {
         EnvironmentTemplateType environmentTemplate = (EnvironmentTemplateType) desc.getEnvironmentTemplate();
 
         TopologyTemplateType topologyTemplate = environmentTemplate.getTopologyTemplate();
-        List<Object> listTopologyTemplate = topologyTemplate.getJkNodeTemplateOrJonasNodeTemplateOrExternalDbNodeTemplate();
+        List<Object> listTopologyTemplate = topologyTemplate.getNodesOrRelationshipsTemplates();
 
         List<Object> listNodesTemplate = desc.getNodesTemplate(listTopologyTemplate);
         Assert.assertTrue("Missing object in nodes template list", listNodesTemplate.contains(listTopologyTemplate.get(0)));

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.0"
            targetNamespace="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0"
            xmlns="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0">
 
@@ -29,8 +31,11 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:element name="jk-node-template" type="jkNodeTemplateType">
+  <xs:element name="node-template" type="jkNodeTemplateType">
     <xs:annotation>
+      <xs:appinfo>
+        <jaxb:factoryMethod name="jkNodeTemplate" />
+      </xs:appinfo>
       <xs:documentation>
         <![CDATA[
           Apache : JK node template

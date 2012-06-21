@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.0"
            targetNamespace="http://jonas.ow2.org/ns/cloud/environment/1.0"
            xmlns="http://jonas.ow2.org/ns/cloud/environment/1.0"
            xmlns:jk="http://jonas.ow2.org/ns/cloud/node-template/paas/router/jk/1.0"
@@ -108,11 +110,16 @@
       </xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="jk:jk-node-template" minOccurs="0"/>
-      <xs:element ref="jonas:jonas-node-template" minOccurs="0"/>
-      <xs:element ref="external-db:external-db-node-template" minOccurs="0"/>
-      <xs:element ref="connector:connector-relationship-template" minOccurs="0"/>
-      <xs:element ref="datasource:datasource-relationship-template" minOccurs="0"/>
+      <xs:annotation>
+        <xs:appinfo>
+          <jaxb:property name="nodesOrRelationshipsTemplates"/>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:element ref="jk:node-template" minOccurs="0"/>
+      <xs:element ref="jonas:node-template" minOccurs="0"/>
+      <xs:element ref="external-db:node-template" minOccurs="0"/>
+      <xs:element ref="connector:relationship-template" minOccurs="0"/>
+      <xs:element ref="datasource:relationship-template" minOccurs="0"/>
     </xs:choice>
   </xs:complexType>
 </xs:schema>
