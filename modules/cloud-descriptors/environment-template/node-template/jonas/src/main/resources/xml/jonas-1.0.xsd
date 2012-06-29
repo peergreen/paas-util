@@ -54,9 +54,13 @@
     </xs:annotation>
     <xs:all>
       <xs:element name="configuration"
-                  type="configurationType"/>
+                  type="configurationType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
       <xs:element name="sla-enforcement"
-                  type="slaEnforcementType"/>
+                  type="slaEnforcementType"
+                  minOccurs="0"
+                  maxOccurs="1"/>
     </xs:all>
     <xs:attribute name="type" type="xs:string" use="required"/>
     <xs:attribute name="name" type="xs:string" use="required"/>
