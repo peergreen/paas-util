@@ -128,11 +128,11 @@
     <xs:all>
       <xs:element name="application"
                   type="xs:string"
-                  minOccurs="1"
+                  minOccurs="0"
                   maxOccurs="1"/>
       <xs:element name="service"
                   type="xs:string"
-                  minOccurs="1"
+                  minOccurs="0"
                   maxOccurs="1"/>
     </xs:all>
   </xs:complexType>
