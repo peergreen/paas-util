@@ -75,7 +75,7 @@
                   maxOccurs="1"/>
       <xs:element name="description"
                   type="xs:string"
-                  minOccurs="1"
+                  minOccurs="0"
                   maxOccurs="1"/>
       <xs:element name="version"
                   type="xs:string"
@@ -87,11 +87,11 @@
                   maxOccurs="1"/>
       <xs:element name="requirements"
                   type="requirementsType"
-                  minOccurs="1"
+                  minOccurs="0"
                   maxOccurs="1"/>
       <xs:element name="capabilities"
                   type="capabilitiesType"
-                  minOccurs="1"
+                  minOccurs="0"
                   maxOccurs="1"/>
       <xs:element name="deployables"
                   type="deployablesType"
