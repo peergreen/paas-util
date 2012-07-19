@@ -121,9 +121,6 @@
                   <artifactId>environment-template-topology-datasource</artifactId>
                 </episode>
               </episodes>
-              <args>
-                <arg>-npa</arg>
-              </args>
             </configuration>
           </execution>
         </executions>

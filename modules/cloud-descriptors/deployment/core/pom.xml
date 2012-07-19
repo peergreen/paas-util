@@ -76,9 +76,6 @@
               <verbose>true</verbose>
               <addCompileSourceRoot>true</addCompileSourceRoot>
               <forceRegenerate>true</forceRegenerate>
-              <args>
-                <arg>-npa</arg>
-              </args>
             </configuration>
           </execution>
         </executions>
