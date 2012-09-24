@@ -82,6 +82,7 @@
               <generateDirectory>${project.build.directory}/generated-sources/jaxb/cloud-application/1.0</generateDirectory>
               <schemaDirectory>src/main/resources/xml</schemaDirectory>
               <generatePackage>org.ow2.jonas.jpaas.util.clouddescriptors.cloudapplication.v1.generated</generatePackage>
+              <bindingDirectory>src/main/xjb</bindingDirectory>
               <strict>true</strict>
               <verbose>true</verbose>
               <extension>true</extension>
