@@ -42,9 +42,23 @@
   <packaging>pom</packaging>
   <name>JPaaS Util</name>
 
+  <url>http://wiki.jasmine.ow2.org/</url>
+  <developers/>
+  <licenses>
+    <license>
+      <name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
+      <url>http://www.gnu.org/copyleft/lesser.html</url>
+    </license>
+  </licenses>
+
   <modules>
     <module>modules</module>
   </modules>
-  
+ 
+  <scm>
+    <connection>scm:git:git://gitorious.ow2.org/ow2-jasmine/jpaas-util.git</connection>
+    <developerConnection>scm:git:git@gitorious.ow2.org:ow2-jasmine/jpaas-util.git</developerConnection>
+    <url>http://gitorious.ow2.org/ow2-jasmine/jpaas-util/trees/master</url>
+  </scm> 
    
 </project>
