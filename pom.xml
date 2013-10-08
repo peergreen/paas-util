@@ -48,9 +48,10 @@
   </modules>
  
   <scm>
-    <connection>scm:git:git://gitorious.ow2.org/ow2-jasmine/jpaas-util.git</connection>
-    <developerConnection>scm:git:git@gitorious.ow2.org:ow2-jasmine/jpaas-util.git</developerConnection>
-    <url>http://gitorious.ow2.org/ow2-jasmine/jpaas-util/trees/master</url>
-  </scm> 
+        <connection>scm:git:https://forge.peergreen.com/git/git/jpaas/jpaas-util.git</connection>
+        <developerConnection>scm:git:https://forge.peergreen.com/git/git/jpaas/jpaas-util.git</developerConnection>
+        <url>https://forge.peergreen.com/git/summary/?r=jpaas/jpaas-util.git</url>
+        <tag>HEAD</tag>
+    </scm>
    
 </project>
