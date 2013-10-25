@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>com.peergreen.paas</groupId>
+    <artifactId>paas-util-cloud-descriptors-environment-template-node-template</artifactId>
+    <version>1.0.0-M1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>PG PaaS :: Util :: Modules :: Cloud descriptors :: Environment template :: Node Template :: Peergreen</name>
+  <artifactId>paas-util-cloud-descriptors-environment-template-node-template-peergreen</artifactId>
+  <packaging>bundle</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>jonas-xsd-v1-unmarshalling</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <generateDirectory>${project.build.directory}/generated-sources/jaxb/peergreen-v1/</generateDirectory>
+              <schemaDirectory>src/main/resources/xml</schemaDirectory>
+              <generatePackage>org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.peergreen.v1.generated</generatePackage>
+              <bindingDirectory>src/main/xjb</bindingDirectory>
+              <strict>true</strict>
+              <verbose>true</verbose>
+              <addCompileSourceRoot>true</addCompileSourceRoot>
+              <forceRegenerate>true</forceRegenerate>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

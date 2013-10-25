@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           jaxb:version="2.0"
+           targetNamespace="http://jonas.ow2.org/ns/cloud/node-template/paas/container/peergreen/1.0"
+           xmlns="http://jonas.ow2.org/ns/cloud/node-template/paas/container/peergreen/1.0">
+
+  <xs:annotation>
+    <xs:documentation>
+      <![CDATA[
+  Peergreen
+      ]]>
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="node-template" type="peergreenNodeTemplateType">
+    <xs:annotation>
+      <xs:appinfo>
+        <jaxb:factoryMethod name="peergreenNodeTemplate" />
+      </xs:appinfo>
+      <xs:documentation>
+        <![CDATA[
+          Peergreen node template
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="peergreenNodeTemplateType">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[
+          The Peergreen node template type describe the container Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="configuration"
+                  type="configurationType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="sla-enforcement"
+                  type="slaEnforcementType"
+                  minOccurs="0"
+                  maxOccurs="1"/>
+    </xs:all>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="configurationType">
+    <xs:annotation>
+      <xs:documentation>
+        <![CDATA[
+        The configuration type describe the Peergreen configuration
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="java-ref"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="java-options"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="peergreen-ref"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="slaEnforcementType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+        The sla-enforcement type describe the sla-enforcement of Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="health"
+                  type="healthType"/>
+      <xs:element name="elasticity"
+                  type="elasticityType"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="healthType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+        The health type describe the health of Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="jmx-indicator"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="elasticityType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+        The elasticity type describe the elasticity of Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="session"
+                  type="sessionType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="aversion"
+                  type="aversionType"
+                  maxOccurs="1"/>
+      <xs:element name="scaling-rules"
+                  type="scalingRulesType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+    <xs:attribute name="min" type="xs:int" use="required"/>
+    <xs:attribute name="max" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="sessionType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+        The session type describe the session of Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="persistence" type="xs:boolean" use="required"/>
+    <xs:attribute name="replication" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="aversionType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+        The aversion type describe the aversion of Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+
+  <xs:complexType name="scalingRulesType">
+    <xs:annotation>
+      <xs:documentation>
+      <![CDATA[
+        The scaling rules type describe scaling rules of Peergreen
+        ]]>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:all>
+      <xs:element name="throughput"
+                  type="throughputType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="response-time"
+                  type="responseTimeType"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="throughputType">
+    <xs:all>
+      <xs:element name="jmx-indicator"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaleup-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaledown-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="responseTimeType">
+    <xs:all>
+      <xs:element name="jmx-indicator"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaleup-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+      <xs:element name="scaledown-threshold"
+                  type="xs:string"
+                  minOccurs="1"
+                  maxOccurs="1"/>
+    </xs:all>
+  </xs:complexType>
+</xs:schema>
+

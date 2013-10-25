@@ -16,6 +16,7 @@
     <module>external-db</module>
     <module>jk</module>
     <module>jonas</module>
+    <module>peergreen</module>
   </modules>
 
 </project>

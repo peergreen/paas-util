@@ -1,0 +1,6 @@
+Import-Package *
+
+Export-Package org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.nodetemplate.peergreen,\
+               org.ow2.jonas.jpaas.util.clouddescriptors.environmenttemplate.peergreen.v1.generated
+
+DynamicImport-Package *
